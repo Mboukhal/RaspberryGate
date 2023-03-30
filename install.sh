@@ -13,7 +13,7 @@ fi
 SCRIPT=$(realpath "$0")
 SCRIPT_PATH=$(dirname "$SCRIPT")
 
-python -c "import evdev"
+python -c "import evdev" &> /dev/null
 if [ "$?" == "1" ]; then
   # install python libraries:
   echo "Install python libraries..."
