@@ -12,7 +12,7 @@ relay = 21
 
 
 def debugStartUp( idCard ):
-    message += idCard
+    message = "Hi, world!: " + idCard
     subprocess.call(["wall", message])
 
 
@@ -23,7 +23,6 @@ def setRelay( move ):
 
 def tryToOpen( idCard ):
     
-    # message = "Hi, world!: "
     # TODO:
     #   check if id in database
     #   if exist - gate 
@@ -31,6 +30,6 @@ def tryToOpen( idCard ):
     # idCard example: 0001257461
     # Define the message to be printed
     
-    # debugStartUp( idCard )
+    debugStartUp( idCard )
     
     print( idCard )

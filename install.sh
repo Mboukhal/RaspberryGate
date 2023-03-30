@@ -7,24 +7,28 @@ installPath='/usr/bin/gateRp'
 # check permissions
 if [ "$EUID" -ne 0 ]
   then echo "Please run as root"
-  exit 1
+  exit 127
 fi
 
 SCRIPT=$(realpath "$0")
 SCRIPT_PATH=$(dirname "$SCRIPT")
 
-# install python libraries:
+# # install python libraries:
 # echo "Install python libraries..."
+# apt install -y python3.9
 # python -m pip install evdev
+# python -m pip install pyudev
 
-# set database check for news every 4h:
+# # set database check for news every 4h:
 
 # if [ ! -f "/usr/bin/checkDbNews.py" ] then
+
+#     # Install database checker:
 #     echo "Install database checker..."
-#     cp $SCRIPT_PATH/startup/checkDbNews.py /usr/bin/
-#     echo "0 */4 * * * /usr/bin/python /usr/bin/checkDbNews.py" > $SCRIPT_PATH/startup//cronjob
-#     crontab $SCRIPT_PATH/startup/cronjob
-#     rm $SCRIPT_PATH/startup/cronjob &> /dev/null 
+#     cp $SCRIPT_PATHd/atabaseHandeler/checkDbNews.py /usr/bin/
+#     echo "0 */4 * * * /usr/bin/python /usr/bin/checkDbNews.py" > $SCRIPT_PATHd/atabaseHandeler//cronjob
+#     crontab $SCRIPT_PATHd/atabaseHandeler/cronjob
+#     rm $SCRIPT_PATHd/atabaseHandeler/cronjob &> /dev/null 
 # fi
 
 
@@ -36,6 +40,7 @@ if [ ! -d "$installPath" ]; then
     mkdir -p $installPath
     cp -r $SCRIPT_PATH/src/* $installPath
     chmod +x $installPath/main.py
+    chmod +x $SCRIPT_PATH/debug/*
 
     # set gate in startup:
     echo "Set gate in startup..."
@@ -59,6 +64,10 @@ if [ ! -d "$installPath" ]; then
     echo "Enable the service..."
     systemctl enable $NAME.service
     systemctl start $NAME.service
+    INPUT=''
+    echo -n "To reboot enter: 'Y', (default: N): "
+    read  INPUT
+    [ "$INPUT" == "Y" -o "$INPUT" == "y" ] && reboot 
     exit 0
 fi
 
