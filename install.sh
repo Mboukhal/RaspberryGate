@@ -45,7 +45,7 @@ if [ ! -d "$installPath" ]; then
     mkdir -p $installPath
     cp -r $SCRIPT_PATH/src/* $installPath
     chmod +x $installPath/main.py
-    chmod +x $SCRIPT_PATH/debug/*
+    # chmod +x $SCRIPT_PATH/src/debug/*
 
     # set gate in startup:
     echo "Set gate in startup..."
