@@ -13,13 +13,16 @@ fi
 SCRIPT=$(realpath "$0")
 SCRIPT_PATH=$(dirname "$SCRIPT")
 
-# # install python libraries:
-# echo "Install python libraries..."
-# apt update
-# apt upgrade -y
-# apt install -y python3.9
-# python -m pip install evdev
-# python -m pip install pyudev
+python -c "import evdev"
+if [ "$?" == "1" ]; then
+  # install python libraries:
+  echo "Install python libraries..."
+  apt update
+  apt upgrade -y
+  apt install -y python3.9
+  python -m pip install pyudev
+  python -m pip install evdev
+fi
 
 # # set database check for news every 4h:
 
