@@ -15,7 +15,8 @@ class   deviceId():
         status = True
         while status:
             self.getDevice()
-            status = exd.getNewId( self.device )
+            if self.device:
+                status = exd.getNewId( self.device )
             if status:
                 exd.waitForDevice()
     
