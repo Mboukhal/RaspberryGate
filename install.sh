@@ -19,7 +19,7 @@ if [ "$?" == "1" ]; then
   echo "Install python libraries..."
   apt update
   apt upgrade -y
-  apt install -y python3.9
+  apt install -y python3.9 python3-pip
   python -m pip install pyudev
   python -m pip install evdev
 fi
