@@ -56,7 +56,7 @@ if [ ! -d "$installPath" ]; then
     echo "[Service]" >> /etc/systemd/system/$NAME.service
     echo "Type=idle" >> /etc/systemd/system/$NAME.service
     echo "User=root" >> /etc/systemd/system/$NAME.service
-    echo "ExecStart=/usr/bin/python $installPath/main.py" >> /etc/systemd/system/$NAME.service
+    echo "ExecStart=/usr/bin/sudo /usr/bin/python $installPath/main.py" >> /etc/systemd/system/$NAME.service
     echo "" >> /etc/systemd/system/$NAME.service
     echo "[Install]" >> /etc/systemd/system/$NAME.service
     echo "WantedBy=multi-user.target" >> /etc/systemd/system/$NAME.service
@@ -86,4 +86,7 @@ rm -rf $installPath
 rm -rf /etc/systemd/system/$NAME.service
 systemctl disable $NAME.service
 systemctl stop $NAME.service
+echo -n "To reboot enter: 'Y', (default: N): "
+read  INPUT
+[ "$INPUT" == "Y" -o "$INPUT" == "y" ] && reboot 
 
