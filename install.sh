@@ -69,10 +69,6 @@ if [ ! -d "$installPath" ]; then
     echo "Enable the service..."
     systemctl enable $NAME.service
     systemctl start $NAME.service
-    INPUT=''
-    echo -n "To reboot enter: 'Y', (default: N): "
-    read  INPUT
-    [ "$INPUT" == "Y" -o "$INPUT" == "y" ] && reboot 
     exit 0
 fi
 
