@@ -86,3 +86,8 @@ echo -n "To reboot enter: 'Y', (default: N): "
 read  INPUT
 [ "$INPUT" == "Y" -o "$INPUT" == "y" ] && reboot 
 
+# # disable wifi and bleutooth
+# echo "dtoverlay=disable-wifi" >> /boot/config.txt
+# echo "dtoverlay=disable-bt" >> /boot/config.txt
+# sudo reboot
+
