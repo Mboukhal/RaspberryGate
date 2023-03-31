@@ -56,6 +56,8 @@ if [ ! -d "$installPath" ]; then
     echo "[Service]" >> /etc/systemd/system/$NAME.service
     echo "Type=idle" >> /etc/systemd/system/$NAME.service
     echo "User=root" >> /etc/systemd/system/$NAME.service
+    echo "Restart=always" >> /etc/systemd/system/$NAME.service
+    echo "RestartSec=2" >> /etc/systemd/system/$NAME.service
     echo "ExecStart=/usr/bin/sudo /usr/bin/python $installPath/main.py" >> /etc/systemd/system/$NAME.service
     echo "" >> /etc/systemd/system/$NAME.service
     echo "[Install]" >> /etc/systemd/system/$NAME.service
