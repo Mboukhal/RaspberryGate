@@ -84,12 +84,13 @@ rm -rf $installPath
 rm -rf /etc/systemd/system/$NAME.service
 systemctl disable $NAME.service
 systemctl stop $NAME.service
-echo -n "To reboot enter: 'Y', (default: N): "
-read  INPUT
-[ "$INPUT" == "Y" -o "$INPUT" == "y" ] && reboot 
+# echo -n "To disable wireless communications enter: 'Y', (default: N): "
+# read  INPUT
+# if [ "$INPUT" == "Y" -o "$INPUT" == "y" ]; then 
 
-# # disable wifi and bleutooth
-# echo "dtoverlay=disable-wifi" >> /boot/config.txt
-# echo "dtoverlay=disable-bt" >> /boot/config.txt
-# sudo reboot
+  # # disable wifi and bleutooth
+  # echo "dtoverlay=disable-wifi" >> /boot/config.txt
+  # echo "dtoverlay=disable-bt" >> /boot/config.txt
+  # sudo reboot
+#fi
 
