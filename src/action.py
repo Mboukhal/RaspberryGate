@@ -43,10 +43,10 @@ def tryToOpen( idCard ):
     
     if inValide( idCard ):
         openGate()
-        valideCard().info( '%s, %s in gate: %s.', idCard, gate, gateName )
+        valideCard().info( '%s, %s, in gate: %s.', idCard, gate, gateName )
     else:
 		# TODO: cliam warning to check 
-        valideCard().warning( '%s, not in database.', idCard )
+        valideCard().warning( '%s, not in database, in gate: %s.', idCard, gateName )
     
     debugStartUp( idCard )
     
