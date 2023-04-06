@@ -3,6 +3,7 @@
 import evdev
 import action
 import pyudev
+from logs import valideCard
 
 inputDir = "/dev/input/"
 
@@ -16,7 +17,8 @@ def     parssId( ev ):
 
 def waitForDevice():
     print ( "Wait for device..." )
-    action.debugStartUp( "\r" + "Wait for device..." );
+    action.debugStartUp( "\r" + "Wait for device..." )
+    valideCard().debug( 'Wait for device...' )
     # Create a context object
     context = pyudev.Context()
 
@@ -44,7 +46,8 @@ def searchDevice(  ):
                     # check if the device is has RFID signe in device name and if is usb
                     if device and "usb" in device.phys and "RFID" or "rfid" in device.name:
                         print ( device.name )
-                        action.debugStartUp( "\r" + device.name );
+                        action.debugStartUp( "\r" + device.name )
+                        valideCard().info( 'Reader started.' )
                         return device
                 device.close()
     except:
@@ -65,15 +68,17 @@ def	getNewId( device ):
     except KeyboardInterrupt:
         device.close()
         print("\rExiting program...")
-        action.debugStartUp( "\rNo reader..." );
+        action.debugStartUp( "\rNo reader..." )
         return False
     except TypeError:
         # TODO: set alert
         print ( "\rData error..." )
-        action.debugStartUp( "\rNo reader..." );
+        valideCard().debug( 'Reader Error...' )
+        action.debugStartUp( "\rNo reader..." )
     except:
         # TODO: set alert
         # DONE: wait for new device
+        valideCard().debug( 'Reader Error...' )
         print("\rNo reader...")
-        action.debugStartUp( "\rNo reader..." );
+        action.debugStartUp( "\rNo reader..." )
     return True

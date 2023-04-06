@@ -3,7 +3,11 @@
 import RPi.GPIO as GPIO
 import subprocess
 from time import sleep
+from logs import valideCard
+from os import environ
 
+gate = environ.get("GATE")
+gateName = environ.get("GATE_NAME")
 
 def openGate():
     relay = 21
@@ -21,12 +25,9 @@ def debugStartUp( idCard ):
     subprocess.call(["wall", message])
 
 
-def setRelay( move ):
-    # move = GPIO.HIGH || GPIO.LOW
-
-
 def tryToOpen( idCard ):
-    
+    global gateName, gate
+
     # TODO:
     #   check if id in database
     #   if exist - gate 
@@ -36,6 +37,10 @@ def tryToOpen( idCard ):
     
     if inValide( idCard ):
         openGate()
+        valideCard().info( '%s, %s in gate: %s.', idCard, gate, gateName )
+    else:
+		# TODO: cliam warning to check 
+        valideCard().warning( '%s, not in database.', idCard )
     
     debugStartUp( idCard )
     
