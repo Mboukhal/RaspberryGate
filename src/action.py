@@ -14,7 +14,7 @@ relay = 21
 try:
     GPIO.cleanup()
 except:
-	pass
+    pass
 
 GPIO.setmode( GPIO.BCM )
 GPIO.setup( relay, GPIO.OUT )
