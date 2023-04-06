@@ -45,8 +45,8 @@ if [ ! -d "$installPath" ]; then
     mkdir -p $installPath
     cp -r $SCRIPT_PATH/src/* $installPath
     chmod +x $installPath/main.py
-    mkdir -p /var/log/gate/
-    touch /var/log/gate/gate.log
+    mkdir -p /var/log/$NAME/
+    touch /var/log/$NAME/$NAME.log
     # chmod +x $SCRIPT_PATH/src/debug/*
 
     # set gate in startup:
