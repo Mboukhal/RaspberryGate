@@ -16,8 +16,8 @@ GPIO.setmode( GPIO.BCM )
 GPIO.setup( relay, GPIO.OUT )
 
 def openGate():
-    global relay
 
     GPIO.output( relay, GPIO.HIGH )
     sleep( 1 )
     GPIO.output( relay, GPIO.LOW )
+    print( "door opened %s", relay )
