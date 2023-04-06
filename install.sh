@@ -3,6 +3,21 @@
 NAME='gate'
 installPath='/usr/bin/gateRp'
 
+INPUT=''
+printf "set gate:\n"
+printf "\t [1]: in\n"
+printf "\t [2]: out\n"
+read  INPUT
+if [ "$INPUT" == "1" ]; then
+    export GATE=in
+elif [ "$INPUT" == "2" ]; then
+    export GATE=out
+fi
+
+INPUT=''
+printf "set gate name:\n"
+read  INPUT
+    export GATE_NAME=$INPUT
 
 # check permissions
 if [ "$EUID" -ne 0 ]
