@@ -3,22 +3,6 @@
 NAME='gate'
 installPath='/usr/bin/gateRp'
 
-INPUT=''
-printf "set gate:\n"
-printf "\t [1]: in\n"
-printf "\t [2]: out\n"
-read  INPUT
-if [ "$INPUT" == "1" ]; then
-    export GATE=in
-elif [ "$INPUT" == "2" ]; then
-    export GATE=out
-fi
-
-INPUT=''
-printf "set gate name:\n"
-read  INPUT
-    export GATE_NAME=$INPUT
-
 # check permissions
 if [ "$EUID" -ne 0 ]
   then echo "Please run as root"
@@ -28,33 +12,14 @@ fi
 SCRIPT=$(realpath "$0")
 SCRIPT_PATH=$(dirname "$SCRIPT")
 
-python -c "import evdev" &> /dev/null
-if [ "$?" == "1" ]; then
-  # install python libraries:
-  echo "Install python libraries..."
-  apt update
-  apt upgrade -y
-  apt install -y python3.9 python3-pip
-  python -m pip install pyudev
-  python -m pip install evdev
-fi
-
-# # set database check for news every 4h:
-
-# if [ ! -f "/usr/bin/checkDbNews.py" ] then
-
-#     # Install database checker:
-#     echo "Install database checker..."
-#     cp $SCRIPT_PATHd/atabaseHandeler/checkDbNews.py /usr/bin/
-#     echo "0 */4 * * * /usr/bin/python /usr/bin/checkDbNews.py" > $SCRIPT_PATHd/atabaseHandeler//cronjob
-#     crontab $SCRIPT_PATHd/atabaseHandeler/cronjob
-#     rm $SCRIPT_PATHd/atabaseHandeler/cronjob &> /dev/null 
-# fi
-
-
 # install gate program
 if [ ! -d "$installPath" ]; then
-
+    # install python libraries:
+    echo "Install python libraries..."
+    apt update
+    apt install -y python3.9 python3-pip
+    python -m pip install pyudev
+    python -m pip install evdev
     # copy project directory:
     echo "Copying project directory..."
     mkdir -p $installPath
@@ -102,6 +67,8 @@ rm -rf $installPath
 rm -rf /etc/systemd/system/$NAME.service
 systemctl disable $NAME.service
 systemctl stop $NAME.service
+
+
 # echo -n "To disable wireless communications enter: 'Y', (default: N): "
 # read  INPUT
 # if [ "$INPUT" == "Y" -o "$INPUT" == "y" ]; then 
