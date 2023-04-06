@@ -14,6 +14,7 @@ SCRIPT_PATH=$(dirname "$SCRIPT")
 
 # install gate program
 if [ ! -d "$installPath" ]; then
+
     # install python libraries:
     echo "Install python libraries..."
     apt update
@@ -67,7 +68,6 @@ rm -rf $installPath
 rm -rf /etc/systemd/system/$NAME.service
 systemctl disable $NAME.service
 systemctl stop $NAME.service
-
 
 # echo -n "To disable wireless communications enter: 'Y', (default: N): "
 # read  INPUT
