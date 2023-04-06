@@ -1,7 +1,6 @@
 import logging
 
-
-def   valideCard( idCard, status=True ):
+def   log():
 
     log_filename = '/var/log/gate/gate.log'
       # create a logger and set its level
