@@ -2,14 +2,19 @@
 
 import RPi.GPIO as GPIO
 import subprocess
+from time import sleep
 
 
-relay = 21
-# GPIO.cleanup()
-# setup the GPIO
-# GPIO.setmode( GPIO.BCM )
-# GPIO.setup( relay, GPIO.OUT )
-
+def openGate():
+    relay = 21
+    
+    # setup the GPIO
+    GPIO.setmode( GPIO.BCM )
+    GPIO.setup( relay, GPIO.OUT )
+    GPIO.output( relay, GPIO.HIGH )
+    sleep( 2 )
+    GPIO.output( relay, GPIO.LOW )
+    GPIO.cleanup()
 
 def debugStartUp( idCard ):
     message = "Hi, world!: " + idCard
@@ -18,7 +23,6 @@ def debugStartUp( idCard ):
 
 def setRelay( move ):
     # move = GPIO.HIGH || GPIO.LOW
-    GPIO.output( relay, move )
 
 
 def tryToOpen( idCard ):
@@ -29,6 +33,9 @@ def tryToOpen( idCard ):
     #   else - make worning
     # idCard example: 0001257461
     # Define the message to be printed
+    
+    if inValide( idCard ):
+        openGate()
     
     debugStartUp( idCard )
     
