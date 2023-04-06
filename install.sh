@@ -46,6 +46,7 @@ if [ ! -d "$installPath" ]; then
     cp -r $SCRIPT_PATH/src/* $installPath
     chmod +x $installPath/main.py
     mkdir -p /var/log/$NAME/
+    mv /var/log/$NAME/$NAME.log /var/log/$NAME/$NAME.log.$(date +"%F_%T").backup &> /dev/null
     touch /var/log/$NAME/$NAME.log
     # chmod +x $SCRIPT_PATH/src/debug/*
 
