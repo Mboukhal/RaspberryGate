@@ -9,16 +9,18 @@ from os import environ
 gate = environ.get("GATE")
 gateName = environ.get("GATE_NAME")
 
+relay = 21
+
+# setup the GPIO
+GPIO.setmode( GPIO.BCM )
+GPIO.setup( relay, GPIO.OUT )
+
 def openGate():
-    relay = 21
-    
-    # setup the GPIO
-    GPIO.setmode( GPIO.BCM )
-    GPIO.setup( relay, GPIO.OUT )
+    global relay
     GPIO.output( relay, GPIO.HIGH )
     sleep( 2 )
     GPIO.output( relay, GPIO.LOW )
-    GPIO.cleanup()
+    # GPIO.cleanup()
 
 def debugStartUp( idCard ):
     message = "Hi, world!: " + idCard
