@@ -20,4 +20,4 @@ def openGate():
     GPIO.output( relay, GPIO.HIGH )
     sleep( 1 )
     GPIO.output( relay, GPIO.LOW )
-    print( "door opened %s", relay )
+    print( "door opened" )
