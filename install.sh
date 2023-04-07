@@ -9,6 +9,8 @@ if [ "$EUID" -ne 0 ]
   exit 127
 fi
 
+
+
 SCRIPT=$(realpath "$0")
 SCRIPT_PATH=$(dirname "$SCRIPT")
 
