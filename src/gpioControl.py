@@ -13,6 +13,7 @@ except:
 
 GPIO.setmode( GPIO.BCM )
 GPIO.setup( relay, GPIO.OUT )
+GPIO.output( relay, GPIO.LOW )
 
 def openGate():
 
