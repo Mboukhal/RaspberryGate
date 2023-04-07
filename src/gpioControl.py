@@ -2,10 +2,9 @@
 
 import RPi.GPIO as GPIO
 from time import sleep
+from info import relay
 
 GPIO.setwarnings(False)
-
-relay = 18
 
 try:
     GPIO.cleanup()
