@@ -9,7 +9,12 @@ if [ "$EUID" -ne 0 ]
   exit 127
 fi
 
+INFO=$(head -1 src/info.py)
+INFO=${INFO:0:-1}
 
+if [ "$INFO" == 'endpoint = ""' ]; then
+  nano src/info.py
+fi
 
 SCRIPT=$(realpath "$0")
 SCRIPT_PATH=$(dirname "$SCRIPT")
@@ -58,6 +63,12 @@ if [ ! -d "$installPath" ]; then
   echo "Enable the service..."
   systemctl enable $NAME.service
   systemctl start $NAME.service
+  echo '
+    # TODO: disable wifi and bleutooth
+    echo "dtoverlay=disable-wifi" >> /boot/config.txt
+    echo "dtoverlay=disable-bt" >> /boot/config.txt
+    sudo reboot
+  '
   exit 0
 fi
 

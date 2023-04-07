@@ -1,8 +1,7 @@
 import requests
 import info
 
-def isValid( idCard='0000' ):
-    global token
+def isValid( idCard='00000000' ):
     
     response = requests.get( info.endpoint, headers=info.headers, data=idCard )
     # TODO: requist access
