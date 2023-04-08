@@ -63,12 +63,6 @@ if [ ! -d "$installPath" ]; then
   echo "Enable the service..."
   systemctl enable $NAME.service
   systemctl start $NAME.service
-  echo '
-    # TODO: disable wifi and bleutooth
-    echo "dtoverlay=disable-wifi" >> /boot/config.txt
-    echo "dtoverlay=disable-bt" >> /boot/config.txt
-    sudo reboot
-  '
   exit 0
 fi
 
