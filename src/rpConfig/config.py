@@ -7,6 +7,9 @@ import secrets
 app = Flask( __name__, template_folder='template', static_folder='static' )
 app.secret_key = secrets.token_hex(16)
 
+app.config['DEBUG'] = False
+os.environ['FLASK_DEBUG'] = '0'
+
 def getData( request ):
     content = {}
     content['endpoint'] = ( request.form['endpoint'] )
