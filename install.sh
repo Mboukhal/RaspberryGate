@@ -4,23 +4,16 @@ NAME='gate'
 installPath='/usr/bin/gateRp'
 
 # check permissions
-if [ "$EUID" -ne 0 ]
-  then echo "Please run as root"
-  exit 127
-fi
-
-INFO=$(head -1 src/info.py)
-INFO=${INFO:0:-1}
-
-if [ "$INFO" == 'endpoint = ""' ]; then
-  nano src/info.py
-fi
+# if [ "$EUID" -ne 0 ]
+#   then echo "Please run as root"
+#   exit 127
+# fi
 
 SCRIPT=$(realpath "$0")
 SCRIPT_PATH=$(dirname "$SCRIPT")
 
 # install gate program
-if [ ! -d "$installPath" ]; then
+# if [ ! -d "$installPath" ]; then
 
   # install python libraries:
   echo "Install python libraries..."
@@ -63,18 +56,18 @@ if [ ! -d "$installPath" ]; then
   echo "Enable the service..."
   systemctl enable $NAME.service
   systemctl start $NAME.service
-  exit 0
-fi
+#   exit 0
+# fi
 
-INPUT=''
-echo -n "To unistalling enter 'Y', (default: N): "
-read  INPUT
-[ "$INPUT" == "Y" -o "$INPUT" == "y" ] || exit 0
+# INPUT=''
+# echo -n "To unistalling enter 'Y', (default: N): "
+# read  INPUT
+# [ "$INPUT" == "Y" -o "$INPUT" == "y" ] || exit 0
 
-echo "Unistalling..."
-rm -rf $installPath
-rm -rf /etc/systemd/system/$NAME.service
-systemctl disable $NAME.service
-systemctl stop $NAME.service
+# echo "Unistalling..."
+# rm -rf $installPath
+# rm -rf /etc/systemd/system/$NAME.service
+# systemctl disable $NAME.service
+# systemctl stop $NAME.service
 
 
