@@ -13,7 +13,6 @@ installPath='/usr/bin/gateRp'
 echo "127.0.1.1		$NAME" >> /etc/hosts
 echo "$NAME" > /etc/hostname
 
-
 SCRIPT=$(realpath "$0")
 SCRIPT_PATH=$(dirname "$SCRIPT")
 
