@@ -23,13 +23,13 @@ SCRIPT_PATH=$(dirname "$SCRIPT")
 echo "Install python libraries..."
 apt update
 apt install -y python3.9 python3-pip
-# ln -sf /usr/bin/python3.7 /usr/bin/python
-python -m pip install pyudev
-python -m pip install evdev
-python -m pip install requests
-python -m pip install flask
-python -m pip install python-dotenv
-python -m pip install watchdog
+# ln -sf /usr/bin/python3.9 /usr/bin/python
+python3 -m pip install pyudev
+python3 -m pip install evdev
+python3 -m pip install requests
+python3 -m pip install flask
+python3 -m pip install python-dotenv
+python3 -m pip install watchdog
 
 # copy project directory:
 echo "Copying project directory..."
@@ -51,7 +51,7 @@ echo "Type=idle" >> /etc/systemd/system/$NAME.service
 echo "User=root" >> /etc/systemd/system/$NAME.service
 echo "Restart=always" >> /etc/systemd/system/$NAME.service
 echo "RestartSec=2" >> /etc/systemd/system/$NAME.service
-echo "ExecStart=/usr/bin/sudo /usr/bin/python $installPath/main.py" >> /etc/systemd/system/$NAME.service
+echo "ExecStart=sudo python3 $installPath/main.py" >> /etc/systemd/system/$NAME.service
 echo "" >> /etc/systemd/system/$NAME.service
 echo "[Install]" >> /etc/systemd/system/$NAME.service
 echo "WantedBy=multi-user.target" >> /etc/systemd/system/$NAME.service
