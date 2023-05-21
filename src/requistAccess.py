@@ -2,11 +2,17 @@ import requests
 import info
 
 def isValid( idCard='00000000' ):
-    # TORM:
-    return True
 	
-    headers = { "Authorization": f"Bearer {info.token}" }
-    response = requests.get( info.endpoint, headers=headers, data=idCard )
+    data = {
+        "basge_id": idCard,
+        "target_token": info.token
+    }
+    
+    response = requests.get( info.endpoint, data=data )
     if response.status_code == 200:
         return True
+    
+    if response.status_code == 401:
+        pass
+
     return False

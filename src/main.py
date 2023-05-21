@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 import extractData as exd
-import device
+import device, os
 from rpConfig.config import startFlask
 
 def checkForConfig():
