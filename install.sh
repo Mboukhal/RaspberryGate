@@ -22,8 +22,8 @@ SCRIPT_PATH=$(dirname "$SCRIPT")
 # install python libraries:
 echo "Install python libraries..."
 apt update
-# apt install -y python3.9 python3-pip
-ln -sf /usr/bin/python3.7 /usr/bin/python
+apt install -y python3.9 python3-pip
+# ln -sf /usr/bin/python3.7 /usr/bin/python
 python -m pip install pyudev
 python -m pip install evdev
 python -m pip install requests
