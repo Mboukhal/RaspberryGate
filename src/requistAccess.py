@@ -11,8 +11,4 @@ def isValid( idCard='00000000' ):
     response = requests.get( info.endpoint, data=data )
     if response.status_code == 200:
         return True
-    
-    if response.status_code == 401:
-        pass
-
     return False
