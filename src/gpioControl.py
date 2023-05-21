@@ -4,10 +4,17 @@ import RPi.GPIO as GPIO
 from time import sleep
 from info import relay
 
-GPIO.setwarnings(False)
-
 try:
-    GPIO.cleanup()
+    GPIO.setwarnings(False)
+
+    try:
+        GPIO.cleanup()
+    except:
+        pass
+
+    GPIO.setmode( GPIO.BCM )
+    GPIO.setup( relay, GPIO.OUT )
+    GPIO.output( relay, GPIO.LOW )
 except:
     pass
 
@@ -20,4 +27,4 @@ def openGate():
     GPIO.output( relay, GPIO.HIGH )
     sleep( 1 )
     GPIO.output( relay, GPIO.LOW )
-    print( "door opened" )
+    # print( "door opened" )

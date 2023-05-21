@@ -3,24 +3,23 @@ import subprocess
 
 
 def setConfig( config ):
-    fileName = 'info.py'
+    fileName = '.env'
 
     with open(fileName, "w+") as file:
-        file.write( "endpoint = '" + config['endpoint'] + "'\n" )
-        file.write( "token = '" + config['token'] + "'\n" )
+        file.write( "endpoint=" + config['endpoint'] + "\n" )
+        file.write( "token=" + config['token'] + "\n" )
         
         if config['relay']:
             relay = int( config['relay'] )
             if 0 < relay < 28:
-                file.write( "relay = '" + config['relay'] + "'\n" )
-        else:
-            file.write( "relay = 14\n" )
+                file.write( "relay=" + config['relay'] + "\n" )
     
     # if 'wifi' in config.form:
     #     wifi_disabled()
     # if config['hostname']:
     #     setHostname( config['hostname'] )
-        
+        # import os
+        # os.system('reboot')
 
 def setHostname( hostname ):
     

@@ -26,6 +26,9 @@ apt install -y python3.9 python3-pip
 python -m pip install pyudev
 python -m pip install evdev
 python -m pip install requests
+python -m pip install flask
+python -m pip install python-dotenv
+python -m pip install watchdog
 
 # copy project directory:
 echo "Copying project directory..."
