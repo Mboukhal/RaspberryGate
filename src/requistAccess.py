@@ -1,14 +1,21 @@
 import requests
-import info
+import os
 
 def isValid( idCard='00000000' ):
-	
+    endpoint = os.getenv("ENDPOINT")
+    token = os.getenv("TOKEN")
+
+    if not endpoint or not token:
+        print("Fialed to load ENDPOINT or TOKEN variables.")
+        return False
     data = {
         "basge_id": idCard,
-        "target_token": info.token
+        "target_token": token
     }
-    
-    response = requests.get( info.endpoint, data=data )
-    if response.status_code == 200:
-        return True
+    try:
+        response = requests.get( endpoint, data=data )
+        if response.status_code == 200:
+            return True
+    except:
+        print("Failed to connect to the API server")
     return False

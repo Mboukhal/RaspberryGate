@@ -60,7 +60,7 @@ def run_flask():
     gServe = make_server('0.0.0.0', 80, app)
     gServe.serve_forever()
 
-def startFlask():
+def startFlask(env_file):
     
     global gServe
     
@@ -69,7 +69,7 @@ def startFlask():
     
     # app.run( host='0.0.0.0', port=80 )
     print ( "OK!" )
-    if watchEnvServer( '.env' ):
+    if watchEnvServer( env_file ):
         with app.app_context():
             gServe.shutdown()
         flask_thread.join()

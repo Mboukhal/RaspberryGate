@@ -1,16 +1,18 @@
 import subprocess
+from pathlib import Path
+
+fileName = f'{Path(__file__).resolve().parent.parent}/.env'
 
 def setConfig( config ):
-    fileName = '.env'
 
     with open(fileName, "w+") as file:
-        file.write( "endpoint=" + config['endpoint'] + "\n" )
-        file.write( "token=" + config['token'] + "\n" )
+        file.write( "ENDPOINT=" + config['endpoint'] + "\n" )
+        file.write( "TOKEN=" + config['token'] + "\n" )
         
         if config['relay']:
             relay = int( config['relay'] )
             if 0 < relay < 28:
-                file.write( "relay=" + config['relay'] + "\n" )
+                file.write( "RELAY=" + config['relay'] + "\n" )
     
     if 'wifi' in config:
         wifi_disabled()

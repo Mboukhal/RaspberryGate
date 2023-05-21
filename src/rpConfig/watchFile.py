@@ -2,7 +2,7 @@ import os
 import time
 from watchdog.observers import Observer
 from watchdog.events import FileSystemEventHandler
-
+from pathlib import Path
 
 class CustomEventHandler(FileSystemEventHandler):
     def __init__(self, file_path, observer):
@@ -22,11 +22,11 @@ class CustomEventHandler(FileSystemEventHandler):
         self.observer.stop()
 
 
-def watchEnvServer(file_name):
-    folder_path = '.'
+def watchEnvServer(env_file):
+    folder_path = Path(__file__).resolve().parent.parent
 
     # Get the file's full path
-    file_path = os.path.join(folder_path, file_name)
+    file_path = os.path.join(folder_path, env_file)
 
     observer = Observer()
     event_handler = CustomEventHandler(file_path, observer)

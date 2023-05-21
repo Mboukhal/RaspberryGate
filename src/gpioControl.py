@@ -2,7 +2,9 @@
 
 import RPi.GPIO as GPIO
 from time import sleep
-from info import relay
+import os
+
+relay = os.getenv("RELAY", 14)
 
 try:
     GPIO.setwarnings(False)
@@ -23,7 +25,6 @@ GPIO.setup( relay, GPIO.OUT )
 GPIO.output( relay, GPIO.LOW )
 
 def openGate():
-
     GPIO.output( relay, GPIO.HIGH )
     sleep( 1 )
     GPIO.output( relay, GPIO.LOW )

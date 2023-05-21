@@ -8,7 +8,7 @@ import requistAccess as req
 from logs import log
 
 # parss keys
-def     parssId( ev ):
+def parssId( ev ):
     if isinstance(ev, evdev.events.KeyEvent) and ev.keystate:
         return ev.keycode[-1]
 
@@ -37,6 +37,7 @@ def	collectId( device ):
         log().info( 'Need to set info in info.py' )
         return False
     except Exception as e:
+        print(str(e))
         print( "Reader Disconnected." )
         log().info( 'Reader Disconnected.' )
     return True
