@@ -1,7 +1,5 @@
 import subprocess
 
-
-
 def setConfig( config ):
     fileName = '.env'
 
@@ -14,32 +12,36 @@ def setConfig( config ):
             if 0 < relay < 28:
                 file.write( "relay=" + config['relay'] + "\n" )
     
-    # if 'wifi' in config.form:
-    #     wifi_disabled()
-    # if config['hostname']:
-    #     setHostname( config['hostname'] )
-        # import os
-        # os.system('reboot')
+    if 'wifi' in config:
+        wifi_disabled()
+    if config['hostname']:
+        setHostname( config['hostname'] )
+        import os
+        os.system('reboot')
 
+def replace_string_in_file(file_path, old_string, new_string):
+    # Read the file contents
+    with open(file_path, 'r') as file:
+        file_contents = file.read()
+
+    # Replace the string
+    updated_contents = file_contents.replace(old_string, new_string)
+
+    # Write the updated contents back to the file
+    with open(file_path, 'w') as file:
+        file.write(updated_contents)      
+   
 def setHostname( hostname ):
     
     hosts_path  = '/etc/hosts'
     hostname_path  = '/etc/hostname'
     string_to_remove = '127.0.1.1'
 
-    with open(hostname_path, "r") as file:
-        hostname = file.read()
-
-    with open(hosts_path, "r") as file:
-        lines = file.readlines()
-
-    with open(hosts_path, "w") as file:
-        for line in lines:
-            if string_to_remove not in line:
-                file.write(line)
-        file.write( "127.0.1.1 =\t" + hostname + "\n" )
-    with open( 'hostname_path', "w") as file:
+    replace_string_in_file( hosts_path, 'gate', hostname )
+        
+    with open( hostname_path, "w") as file:
         file.write( hostname + "\n" )
+    print ("ok all done")
 
 
 def wifi_disabled():
