@@ -9,11 +9,11 @@ def isValid( idCard='00000000' ):
         print("Fialed to load ENDPOINT or TOKEN variables.")
         return False
     data = {
-        "basge_id": idCard,
+        "badge_id": idCard,
         "target_token": token
     }
     try:
-        response = requests.get( endpoint, data=data )
+        response = requests.post( endpoint, data=data )
         if response.status_code == 200:
             return True
     except:

@@ -2,7 +2,6 @@
 import extractData as exd
 import device, os
 from rpConfig.config import startFlask
-# import info
 from pathlib import Path
 from dotenv import load_dotenv
 
