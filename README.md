@@ -1,5 +1,4 @@
 # raspberryGate
 
-in sd card path execut:
-	git clone https://github.dev/Mboukhal/raspberryGate;
-	echo "init=/boot/raspberryGate/install.sh" >> cmdline.txt
+git clone https://github.dev/Mboukhal/raspberryGate
+sudo bash raspberryGate/install.sh
