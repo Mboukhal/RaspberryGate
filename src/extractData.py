@@ -2,7 +2,6 @@
 
 import evdev
 import requests
-import os
 import gpioControl as gc
 import requistAccess as req
 from logs import log
@@ -23,21 +22,9 @@ def	collectId( device ):
                 dataId += data
             elif data:
                 # try to open gate
-                if req.isValid( dataId ):
+                if req.isValid( dataId, device.phys ):
                     gc.openGate()
                 print(dataId)
                 dataId = ''
-    except KeyboardInterrupt:
-        device.close()
-        print("\rExiting program...")
-        return False
-    except requests.exceptions.MissingSchema:
-        device.close()
-        print( 'Need to set info in info.py' )
-        log().info( 'Need to set info in info.py' )
-        return False
-    except Exception as e:
-        print(str(e))
-        print( "Reader Disconnected." )
-        log().info( 'Reader Disconnected.' )
-    return True
+    except:
+        pass

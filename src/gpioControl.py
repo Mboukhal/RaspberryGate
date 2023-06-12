@@ -4,28 +4,12 @@ import RPi.GPIO as GPIO
 from time import sleep
 import os
 
-relay = os.getenv("RELAY", 14)
+RELAY_1 = 14
+RELAY_2 = 15
 
-try:
-    GPIO.setwarnings(False)
-
-    try:
-        GPIO.cleanup()
-    except:
-        pass
-
-    GPIO.setmode( GPIO.BCM )
-    GPIO.setup( relay, GPIO.OUT )
-    GPIO.output( relay, GPIO.LOW )
-except:
-    pass
-
-GPIO.setmode( GPIO.BCM )
-GPIO.setup( relay, GPIO.OUT )
-GPIO.output( relay, GPIO.LOW )
-
-def openGate():
-    GPIO.output( relay, GPIO.HIGH )
-    sleep( 1 )
-    GPIO.output( relay, GPIO.LOW )
+def openGate( gate ):
+    
+    GPIO.output( RELAY_1 + gate, GPIO.HIGH )
+    sleep( 0.8 )
+    GPIO.output( RELAY_1 + gate, GPIO.LOW )
     # print( "door opened" )

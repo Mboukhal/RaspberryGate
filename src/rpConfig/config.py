@@ -17,26 +17,19 @@ app.secret_key = secrets.token_hex(16)
 # os.environ['FLASK_DEBUG'] = '0'
 
 def getData( request ):
+    print (request)
     content = {}
-    content['endpoint'] = ( request.form['endpoint'] )
-    content['token']    = ( request.form['token']    )
-    content['relay']    = ( request.form['relay']    )
-    content['hostname'] = ( request.form['hostname'] )
+    content['endpoint']         = ( request.form['endpoint'] )
+    content['token']            = ( request.form['token']    )
+    content['token-second']     = ( request.form['token-second']    )
+    content['hostname']         = ( request.form['hostname'] )
     return content
 
 @app.route('/', methods=['GET', 'POST'])
 def edit_file():
-    
+
     if request.method == 'POST':
         content = getData( request )
-        if content['relay']:
-            try:
-                relay = int( content['relay'] )
-                if 0 < relay < 28:
-                    raise ValueError( "" )
-            except ValueError: 
-                    flash('relay error.')
-                    return render_template( "index.html" )
         if not content['endpoint']:
             flash('Endpoint is required.')
             return render_template( "index.html" )
@@ -44,11 +37,7 @@ def edit_file():
             flash('Token is required.')
             return render_template( "index.html" )
         setConfig( content )
-        # if os.path.exists( ".env" ):
-        #     func = request.environ.get('werkzeug.server.shutdown')
-        #     if func is None:
-        #         raise RuntimeError('Not running with the Werkzeug server')
-        #     func()
+        
         return 'Server shutting down...'
     else:
         return render_template( "index.html" )
@@ -67,18 +56,8 @@ def startFlask(env_file):
     flask_thread = threading.Thread(target=run_flask)
     flask_thread.start()
     
-    # app.run( host='0.0.0.0', port=80 )
-    print ( "OK!" )
     if watchEnvServer( env_file ):
         with app.app_context():
             gServe.shutdown()
         flask_thread.join()
-    
-    # try:
-    #     app.run( host='0.0.0.0', port=80 )
-    # except exit_flask:
-    #     print( exit_flask )
 
-
-# if __name__ == '__main__':
-#     startFlask()

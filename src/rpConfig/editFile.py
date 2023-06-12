@@ -6,13 +6,14 @@ fileName = f'{Path(__file__).resolve().parent.parent}/.env'
 def setConfig( config ):
 
     with open(fileName, "w+") as file:
-        file.write( "ENDPOINT=" + config['endpoint'] + "\n" )
-        file.write( "TOKEN=" + config['token'] + "\n" )
         
-        if config['relay']:
-            relay = int( config['relay'] )
-            if 0 < relay < 28:
-                file.write( "RELAY=" + config['relay'] + "\n" )
+        file.write( "ENDPOINT=" + config['endpoint'] + "\n" )
+        
+        if config['token-second']:
+            file.write( "TOKEN-IN=" + config['token'] + "\n" )
+            file.write( "TOKEN-OUT=" + config['token-second'] + "\n" )
+        else:
+            file.write( "TOKEN=" + config['token'] + "\n" )
     
     if 'wifi' in config:
         wifi_disabled()

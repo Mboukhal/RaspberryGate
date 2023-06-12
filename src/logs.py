@@ -1,9 +1,10 @@
-import logging
+import logging, os
 
-def   log():
+def log():
 
     log_filename = '/var/log/gate/gate.log'
-      # create a logger and set its level
+
+    # create a logger and set its level
     logger = logging.getLogger('gate')
     logger.setLevel(logging.INFO)
 
