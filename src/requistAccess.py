@@ -22,7 +22,7 @@ def isValid( idCard, device ):
 
     if not endpoint or not token:
         print("Fialed to load ENDPOINT or TOKEN variables.")
-        return False
+        return -1
     data = {
         "badge_id": idCard,
         "target_token": token
@@ -30,8 +30,8 @@ def isValid( idCard, device ):
     try:
         response = requests.post( endpoint, data=data )
         if response.status_code == 200:
-            return True
+            return gate
     except:
         pass
         # print("Failed to connect to the API server")
-    return False
+    return -1
