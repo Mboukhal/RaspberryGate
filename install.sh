@@ -9,6 +9,18 @@ installPath='/usr/bin/gateRp'
 #   exit 127
 # fi
 
+
+if [ "$1" = "-rm" ]; then
+
+    echo "Unistalling..."
+    rm -rf $installPath
+    rm -rf /etc/systemd/system/$NAME.service
+    systemctl disable $NAME.service
+    systemctl stop $NAME.service
+
+    exit 0
+fi
+
 # set hostname
 echo "127.0.1.1		$NAME" >> /etc/hosts
 echo "$NAME" > /etc/hostname
@@ -71,11 +83,5 @@ systemctl start $NAME.service
 # echo -n "To unistalling enter 'Y', (default: N): "
 # read  INPUT
 # [ "$INPUT" == "Y" -o "$INPUT" == "y" ] || exit 0
-
-# echo "Unistalling..."
-# rm -rf $installPath
-# rm -rf /etc/systemd/system/$NAME.service
-# systemctl disable $NAME.service
-# systemctl stop $NAME.service
 
 
