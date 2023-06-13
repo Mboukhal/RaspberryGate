@@ -36,8 +36,9 @@ echo "Install python libraries..."
 apt update
 apt install -y python3.9 python3-pip
 # ln -sf /usr/bin/python3.9 /usr/bin/python
-python3 -m pip install pyudev
 python3 -m pip install evdev
+python3 -m pip install pyusb
+python3 -m pip install pyudev
 python3 -m pip install requests
 python3 -m pip install flask
 python3 -m pip install python-dotenv
