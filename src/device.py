@@ -1,35 +1,29 @@
-import requests
-import os
+from logs import log
+import pyudev, threading
+import evdev
 
-def isValid( idCard, device ):
-    endpoint = os.getenv("ENDPOINT")
-    token = os.getenv("TOKEN")
-    portCount = int(os.getenv("PORT-COUNT"))
 
-    gate = 0
+def get_connected_usb_devices():
+    devices = [evdev.InputDevice(device) for device in evdev.list_devices()]
+    usb_devices = [device for device in devices if 'usb' in device.phys.lower()]
+    return usb_devices
 
-    if token == None:
-        if portCount > 1:
-            port = int(device[19])
-            if port <= (portCount / 2): 
-                gate = 0
-                token = os.getenv("TOKEN-IN")
-            else: 
-                gate = 1
-                token = os.getenv("TOKEN-OUT")
+def wait_for_usb_connection_or_disconnection(connected=True):
+    context = pyudev.Context()
+    monitor = pyudev.Monitor.from_netlink(context)
+    monitor.filter_by(subsystem='usb')
 
-    if not endpoint or not token:
-        print("Fialed to load ENDPOINT or TOKEN variables.")
-        return False
-    data = {
-        "badge_id": idCard,
-        "target_token": token
-    }
-    try:
-        response = requests.post( endpoint, data=data )
-        if response.status_code == 200:
-            return True
-    except:
-        pass
-        # print("Failed to connect to the API server")
-    return False
+    condition = threading.Condition()
+
+    def device_event(observer, device):
+        if (connected and device.action == 'add') or (connected and device.action == 'remove'):
+            with condition:
+                condition.notify()
+
+    observer = pyudev.MonitorObserver(monitor, device_event)
+    observer.start()
+
+    with condition:
+        condition.wait()
+
+    observer.stop()
