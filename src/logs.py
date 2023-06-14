@@ -1,18 +1,13 @@
 import logging, os
 
-
-LOG_FILE = '/var/log/gate/gate.log'
-
-def log():
-
-    log_filename = '/var/log/gate/gate.log'
+def log(log_file="/var/log/gate/gate.log"):
 
     # create a logger and set its level
     logger = logging.getLogger('gate')
     logger.setLevel(logging.INFO)
 
     # create a file handler and set its level
-    file_handler = logging.FileHandler(log_filename)
+    file_handler = logging.FileHandler(log_file)
     # file_handler.setLevel(logging.INFO)
 
     # create a formatter and set it on the handler
