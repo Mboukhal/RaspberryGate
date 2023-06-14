@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#!/bin/bash
+
 NAME='gate'
 installPath='/usr/bin/gateRp'
 
@@ -21,9 +23,9 @@ if [ "$1" = "-rm" ]; then
     exit 0
 fi
 
-# set hostname
-echo "127.0.1.1		$NAME" >> /etc/hosts
-echo "$NAME" > /etc/hostname
+# # set hostname
+# echo "127.0.1.1		$NAME" >> /etc/hosts
+# echo "$NAME" > /etc/hostname
 
 SCRIPT=$(realpath "$0")
 SCRIPT_PATH=$(dirname "$SCRIPT")

@@ -24,7 +24,7 @@ def	collectId( device ):
             elif data:
                 # try to open gate
                 gate = req.isValid( dataId, device.phys )
-                if gate != -1:
+                if gate:
                     gc.openGate(gate)
                 print(dataId)
                 dataId = ''
