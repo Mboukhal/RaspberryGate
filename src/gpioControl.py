@@ -12,4 +12,3 @@ def openGate( gate ):
     GPIO.output( RELAY_1 + gate, GPIO.HIGH )
     sleep( 0.8 )
     GPIO.output( RELAY_1 + gate, GPIO.LOW )
-    # print( "door opened" )

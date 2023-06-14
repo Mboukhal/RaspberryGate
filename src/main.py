@@ -8,13 +8,11 @@ import usb.core
 import threading
 import ctypes
 import RPi.GPIO as GPIO
+import logs
+import gpioControle as gc
 
-
-
-env_file = f'{Path(__file__).resolve().parent}/.env'
-RELAY_1 = 14
-RELAY_2 = 15
-
+# env_file = f'{Path(__file__).resolve().parent}/.env'
+ENV_FILE = f'/boot/.env'
 
 def initGpio():
 
@@ -27,37 +25,39 @@ def initGpio():
 			pass
 
 		GPIO.setmode( GPIO.BCM )
-		GPIO.setup( RELAY_1, GPIO.OUT )
-		GPIO.output( RELAY_1, GPIO.LOW )
-		GPIO.setup( RELAY_2, GPIO.OUT )
-		GPIO.output( RELAY_2, GPIO.LOW )
+		GPIO.setup( gc.RELAY_1, GPIO.OUT )
+		GPIO.output( gc.RELAY_1, GPIO.LOW )
+		GPIO.setup( gc.RELAY_2, GPIO.OUT )
+		GPIO.output( gc.RELAY_2, GPIO.LOW )
 	except:
 		pass
 
 	GPIO.setmode( GPIO.BCM )
-	GPIO.setup( RELAY_1, GPIO.OUT )
-	GPIO.output( RELAY_1, GPIO.LOW )
-	GPIO.setup( RELAY_2, GPIO.OUT )
-	GPIO.output( RELAY_2, GPIO.LOW )
+	GPIO.setup( gc.RELAY_1, GPIO.OUT )
+	GPIO.output( gc.RELAY_1, GPIO.LOW )
+	GPIO.setup( gc.RELAY_2, GPIO.OUT )
+	GPIO.output( gc.RELAY_2, GPIO.LOW )
     
 def get_usb_port_count():
     port_count = str(usb.core.find()).count("bLength")
-    with open(env_file, "a") as file:
-        file.write("PORT-COUNT=" + str(port_count) + "\n")
+    with open(ENV_FILE, "a") as file:
+        file.write("PORT_COUNT=" + str(port_count) + "\n")
 
 def checkForConfig():
-    if not load_dotenv(dotenv_path=env_file):
-        log_filename = '/var/log/gate/gate.log'
-        print("Trying to create .env file")
-        startFlask(env_file)
-        get_usb_port_count()
-        print(".env file created successfully")
-        if not os.path.exists(log_filename):
-            os.mkdir(log_filename[0:-9])
-            # Create the file
-            with open(log_filename, 'w') as file:
-                pass
-        load_dotenv(dotenv_path=env_file)
+        
+    if not os.path.exists(logs.LOG_FILE):
+        os.mkdir(logs.LOG_FILE[0:-9])
+		# Create the file
+        with open(logs.LOG_FILE, 'w') as file:
+            pass
+
+    if not load_dotenv(dotenv_path=ENV_FILE):
+        exit(1)
+    # print("Trying to create .env file")
+    # startFlask(ENV_FILE)
+    get_usb_port_count()
+    initGpio()
+    # print(".env file created successfully")
 
 def terminate_thread(thread):
     """Terminate a thread forcefully."""
@@ -88,7 +88,6 @@ def reset_threads( old_threads_list, new_devices_list ):
 if __name__ == '__main__':
     
     checkForConfig()
-    initGpio()
     
     thread_list = []
     

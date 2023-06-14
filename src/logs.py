@@ -1,5 +1,8 @@
 import logging, os
 
+
+LOG_FILE = '/var/log/gate/gate.log'
+
 def log():
 
     log_filename = '/var/log/gate/gate.log'
