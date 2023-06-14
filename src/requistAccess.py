@@ -1,19 +1,20 @@
 import requests
 import os
+import usb.core
 
 def isValid( idCard, device ):
     endpoint = os.getenv("ENDPOINT")
     token = os.getenv("TOKEN_1")
     token_2 = os.getenv("TOKEN_2")
-    portCount = int(os.getenv("PORT_COUNT"))
-
     gate = 0
 
-    if token_2 and portCount > 1:
-        port = int(device[19])
-        if port > (portCount / 2): 
-            gate = 1
-            token = token_2
+    if token_2:
+        portCount = (usb.core.find()).count("bLength")
+        if portCount > 1:
+            port = int(device[19])
+            if port > (portCount / 2): 
+                gate = 1
+                token = token_2
 
     # print(token)
     # print(endpoint)

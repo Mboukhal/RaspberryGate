@@ -1,6 +1,7 @@
 from logs import log
 import pyudev, threading
 import evdev
+import ctypes
 
 
 def get_connected_usb_devices():
@@ -27,3 +28,30 @@ def wait_for_usb_connection_or_disconnection(connected=True):
         condition.wait()
 
     observer.stop()
+    
+
+def terminate_thread(thread):
+    """Terminate a thread forcefully."""
+    if not thread.is_alive():
+        return
+
+    thread_id = thread.ident
+    res = ctypes.pythonapi.PyThreadState_SetAsyncExc(ctypes.c_long(thread_id), ctypes.py_object(SystemExit))
+    if res > 1:
+        ctypes.pythonapi.PyThreadState_SetAsyncExc(ctypes.c_long(thread_id), 0)
+        print('Failed to terminate thread:', thread)
+      
+def reset_threads( old_threads_list, new_devices_list ):
+    
+    if old_threads_list:
+        for thread in old_threads_list:
+            terminate_thread(thread)
+    
+    new_threads_list = []
+    
+    for device in new_devices_list:
+        thread = threading.Thread(target=exd.collectId, args=(device,))
+        thread.start()
+        new_threads_list.append(thread)
+    
+    return new_threads_list
