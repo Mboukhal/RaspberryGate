@@ -25,6 +25,7 @@ def	collectId( device ):
                 # try to open gate
                 gate = req.isValid( dataId, device.phys )
                 if gate:
+                    log().info(f"{dataId} - is {gate}")
                     gc.openGate(gate)
                 print(dataId)
                 dataId = ''
