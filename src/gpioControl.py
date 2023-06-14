@@ -3,8 +3,10 @@ import RPi.GPIO as GPIO
 from time import sleep
 import os
 
-RELAY_1 = 14
-RELAY_2 = 15
+
+RELAY_1 = 14		# IN relay
+
+RELAY_2 = 15		# OUT relay
 
 def openGate( gate ):
     
@@ -16,7 +18,6 @@ def openGate( gate ):
     GPIO.output( RELAY_1 + gate, GPIO.HIGH )
     sleep( 0.8 )
     GPIO.output( RELAY_1 + gate, GPIO.LOW )
-
 
 def initGpio():
 
