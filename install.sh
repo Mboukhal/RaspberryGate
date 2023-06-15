@@ -47,7 +47,7 @@ mkdir -p /var/log/$NAME/
 mv /var/log/$NAME/$NAME.log /var/log/$NAME/$NAME.log.$(date +"%F_%T").backup &> /dev/null
 touch /var/log/$NAME/$NAME.log
 
-# set gate in startup:
+# set gate in startup service:
 echo "Set gate in startup..."
 echo "[Unit]" >> /etc/systemd/system/$NAME.service
 echo "Description=$NAME" >> /etc/systemd/system/$NAME.service
