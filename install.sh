@@ -24,7 +24,6 @@ fi
 SCRIPT=$(realpath "$0")
 SCRIPT_PATH=$(dirname "$SCRIPT")
 
-
 # install python libraries:
 echo "Install python libraries..."
 apt update
