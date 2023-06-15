@@ -6,10 +6,14 @@ from setup import setup
 
 if __name__ == '__main__':
     
+    # check all setup 
     setUp()
     
     thread_list = []
     
+    # make thread's for every usb reader and wait
+    # for update usb if one removed or added
+    # to update thread's list
     while True:
         connected_usb_devices = device.get_connected_usb_devices()
         log(log_file).info(f"new decies connected - {connected_usb_devices}")

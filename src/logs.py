@@ -1,7 +1,8 @@
-import logging, os
+import logging
 
 def log(log_file="/var/log/gate/gate.log"):
 
+    '''log initializing'''
     # create a logger and set its level
     logger = logging.getLogger('gate')
     logger.setLevel(logging.INFO)

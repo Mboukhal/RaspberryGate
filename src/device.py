@@ -5,11 +5,15 @@ import ctypes
 
 
 def get_connected_usb_devices():
+
+    '''get usb device'''
     devices = [evdev.InputDevice(device) for device in evdev.list_devices()]
     usb_devices = [device for device in devices if 'usb' in device.phys.lower()]
     return usb_devices
 
 def wait_for_usb_connection_or_disconnection(connected=True):
+
+    '''wait for usb ports updates'''
     context = pyudev.Context()
     monitor = pyudev.Monitor.from_netlink(context)
     monitor.filter_by(subsystem='usb')
@@ -31,7 +35,8 @@ def wait_for_usb_connection_or_disconnection(connected=True):
     
 
 def terminate_thread(thread):
-    """Terminate a thread forcefully."""
+
+    '''Terminate a thread forcefully.'''
     if not thread.is_alive():
         return
 
@@ -43,6 +48,7 @@ def terminate_thread(thread):
       
 def reset_threads( old_threads_list, new_devices_list ):
     
+    '''update thread list'''
     if old_threads_list:
         for thread in old_threads_list:
             terminate_thread(thread)

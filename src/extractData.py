@@ -8,24 +8,24 @@ from logs import log
 import netifaces
 
 
-# parss keys
-def parssId( ev ):
-    if isinstance(ev, evdev.events.KeyEvent) and ev.keystate:
-        return ev.keycode[-1]
-
 def	collectId( device ):
+
+    '''collect id from usb RFID reader character by character 
+        as keyboard keys click's'''
     dataId = ''
     try:
         # collect data from usb file
         for event in device.read_loop():
             ev = evdev.categorize(event)
             data = parssId( ev )
+            if isinstance(ev, evdev.events.KeyEvent) and ev.keystate:
+                data = ev.keycode[-1]
             if data and len(data) == 1 and data.isnumeric():
                 dataId += data
             elif data:
                 # try to open gate
                 gate = req.isValid( dataId, device.phys )
-                if gate == "no":
+                if gate == -1:
                     log().info(f"{dataId} - Access denied")
                 elif gate:
                     log().info(f"{dataId} - Access granted - {gate}")
@@ -36,6 +36,7 @@ def	collectId( device ):
 
 def get_interface_details():
 
+    '''get interface info'''
     interfaces = netifaces.interfaces()
 
     interface_details = []

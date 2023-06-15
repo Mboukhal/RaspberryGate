@@ -12,6 +12,8 @@ ENV_FILE = f'/boot/gate.env'
 LOG_FILE = f'/boot/gate.log'
 
 def setUp():
+    
+    '''setup and load env file every start'''
  
     # try load env
     if not load_dotenv(dotenv_path=ENV_FILE):

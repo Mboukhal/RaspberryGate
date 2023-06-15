@@ -5,16 +5,10 @@ import os
 
 
 RELAY_1 = 14		# IN relay
-
 RELAY_2 = 15		# OUT relay
 
-def openGate( gate ):
+def openGate( relay ):
     
-    relay = RELAY_1
-
-    if gate == "out":
-        relay = RELAY_2
-
     GPIO.output( relay, GPIO.HIGH )
     sleep( 0.8 )
     GPIO.output( relay, GPIO.LOW )
