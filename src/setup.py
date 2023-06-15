@@ -8,7 +8,7 @@ import uuid
 import os
 
 
-ENV_FILE = f'/boot/.env'
+ENV_FILE = f'/boot/gate.env'
 LOG_FILE = f'/boot/gate.log'
 
 def setUp():

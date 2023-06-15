@@ -1,6 +1,6 @@
 # RaspberryGate
 
-RaspberryGate is a gate control system designed to replace outdated gate badges and integrate seamlessly with your existing infrastructure. This repository contains the source code and installation script for RaspberryGate, which utilizes a Raspberry Pi along with an RFID USB reader and USB ports.
+RaspberryGate is a gate control system designed to replace outdated gate badges and integrate seamlessly with your existing infrastructure. This repository contains the source code and installation script for RaspberryGate, which utilizes a Raspberry Pi along with an RFID USB reader, USB ports, and relays.
 
 ## Installation
 
@@ -8,21 +8,23 @@ To install RaspberryGate, follow these steps:
 
 1. Clone the repository:
    ```
-   git clone https://github.dev/Mboukhal/raspberryGate
+   git clone https://github.dev/Mboukhal/RaspberryGate
    ```
 
 2. Run the installation script with root privileges:
    ```
-   sudo bash raspberryGate/install.sh
+   sudo bash RaspberryGate/install.sh
    ```
 
 ## Configuration
 
-RaspberryGate supports the use of an RFID USB reader and USB ports to assign tokens. The configuration is done through the `/boot/.env` file.
+RaspberryGate utilizes relays connected to specific GPIO pins on the Raspberry Pi to control the gate opening. Pin 14 is used to open the gate for incoming access, while pin 15 is used to open the gate for outgoing access.
 
-If two tokens are assigned, the available USB ports are divided evenly between the tokens. For example, if there are four USB ports, each assigned token will have access to two ports. If only one token is assigned, all USB ports will be dedicated to that token.
+Make sure the relays are correctly connected to the respective GPIO pins on the Raspberry Pi before proceeding.
 
-Modify the `/boot/.env` file to set up the necessary parameters. Ensure that the file contains the following entries:
+The configuration is done through the `/boot/gate.env` file. This file needs to contain the `ENDPOINT` and at least one of the `TOKEN_IN` or `TOKEN_OUT` entries.
+
+Modify the `gate.env` file to set up the necessary parameters. Ensure that the file contains the following entries:
 
 ```shell
 ENDPOINT="http://10.42.6.87"		
@@ -31,7 +33,7 @@ TOKEN_OUT="token@out"
 HOSTNAME="Gate"
 ```
 
-Adjust the values in the `.env` file according to your setup and assign the appropriate tokens.
+Adjust the values in the `gate.env` file according to your setup, including the endpoint and token values. The `HOSTNAME` can be customized to your desired gate name.
 
 ## Logs
 
