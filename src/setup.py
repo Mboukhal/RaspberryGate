@@ -52,7 +52,6 @@ def setUp():
     for interface in interface_details:
         log(log_file).info(f"{interface['interface']} - {interface['mac_address']} - {interface['ip_address']}")
 
-
     if os.path.exists(logs.LOG_FILE):
         return
            

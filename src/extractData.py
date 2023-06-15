@@ -30,7 +30,6 @@ def	collectId( device ):
                 elif gate:
                     log().info(f"{dataId} - Access granted - {gate}")
                     gc.openGate(gate)
-                print(dataId)
                 dataId = ''
     except:
         pass

@@ -39,7 +39,7 @@ def terminate_thread(thread):
     res = ctypes.pythonapi.PyThreadState_SetAsyncExc(ctypes.c_long(thread_id), ctypes.py_object(SystemExit))
     if res > 1:
         ctypes.pythonapi.PyThreadState_SetAsyncExc(ctypes.c_long(thread_id), 0)
-        print('Failed to terminate thread:', thread)
+        log(log_file).info('Failed to terminate thread:', thread)
       
 def reset_threads( old_threads_list, new_devices_list ):
     

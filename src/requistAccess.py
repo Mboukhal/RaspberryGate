@@ -27,9 +27,6 @@ def isValid( idCard, device ):
                 gate = "out"
                 token = token_out
 
-    # print(token)
-    # print(endpoint)
-
     if not endpoint or not token:
         log().info("Fialed to load ENDPOINT or TOKEN variables.")
         return None

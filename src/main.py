@@ -12,6 +12,6 @@ if __name__ == '__main__':
     
     while True:
         connected_usb_devices = device.get_connected_usb_devices()
-        print(connected_usb_devices)
+        log(log_file).info(f"new decies connected - {connected_usb_devices}")
         thread_list = device.reset_threads(thread_list, connected_usb_devices)
         device.wait_for_usb_connection_or_disconnection()
