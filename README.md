@@ -1,10 +1,10 @@
-# raspberryGate
+# RaspberryGate
 
-This repository contains the source code and installation script for raspberryGate. It provides a gate control system using a Raspberry Pi.
+RaspberryGate is a gate control system designed to replace outdated gate badges and integrate seamlessly with your existing infrastructure. This repository contains the source code and installation script for RaspberryGate, which utilizes a Raspberry Pi along with an RFID USB reader and USB ports.
 
 ## Installation
 
-To install raspberryGate from scratch, follow these steps:
+To install RaspberryGate, follow these steps:
 
 1. Clone the repository:
    ```
@@ -18,23 +18,29 @@ To install raspberryGate from scratch, follow these steps:
 
 ## Configuration
 
-Before running the application, make sure to add a `.env` file to the SD card with the following example content:
+RaspberryGate supports the use of an RFID USB reader and USB ports to assign tokens. The configuration is done through the `/boot/.env` file.
 
-```
-ENDPOINT="http://10.32.116.187"		*
-TOKEN_IN="OK"
-TOKEN_OUT="OK"
-HOSTNAME="OK"
+If two tokens are assigned, the available USB ports are divided evenly between the tokens. For example, if there are four USB ports, each assigned token will have access to two ports. If only one token is assigned, all USB ports will be dedicated to that token.
+
+Modify the `/boot/.env` file to set up the necessary parameters. Ensure that the file contains the following entries:
+
+```shell
+ENDPOINT="http://10.42.6.87"		
+TOKEN_IN="token@in"
+TOKEN_OUT="token@out"
+HOSTNAME="Gate"
 ```
 
-The `.env` file should at least contain the endpoint and one token. Adjust the values according to your setup.
+Adjust the values in the `.env` file according to your setup and assign the appropriate tokens.
 
 ## Logs
 
-- Boot logs can be found in `/boot/gate.log`. These logs validate the environment file and display the interfaces' MAC addresses and IP addresses if connected.
+RaspberryGate generates two types of logs:
 
-- Main logs can be found in `/var/log/gate/gate.log`. These logs include information about user ID validation, error logs, and more.
+- **Boot Logs**: These logs can be found in `/boot/gate.log`. They validate the environment file and provide information about connected interfaces, including MAC addresses and IP addresses.
 
-Feel free to explore the repository and make any necessary changes to suit your requirements.
+- **Main Logs**: The main logs are located in `/var/log/gate/gate.log`. They include details about user ID validation, error logs, and other relevant information.
+
+Feel free to explore the repository and make any necessary changes to adapt RaspberryGate to your specific requirements.
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
