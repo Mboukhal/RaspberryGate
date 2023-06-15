@@ -45,7 +45,6 @@ def isValid( idCard, device ):
             return gate
         else:
             return "no"
-            
     except:
         pass
     log().info("Failed to connect to the API server")

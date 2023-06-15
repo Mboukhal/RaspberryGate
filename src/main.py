@@ -37,6 +37,24 @@ def setUp():
     # initialize GPIO
     gc.initGpio()
 
+    hostname = os.getenv("HOSTNAME")
+
+    if hostname == None:
+        hostname = str(uuid.uuid4())
+
+    with open("/etc/hosts", 'a') as file:
+        file.write("127.0.1.1\t\t" + hostname)
+    
+    with open("/etc/hostname", 'w') as file:
+        file.write(hostname)
+
+    log(log_file).info(f"{hostname} - is set as Hostname")
+
+    interface_details = exd.get_interface_details()
+    for interface in interface_details:
+        log(log_file).info(f"{interface['interface']} - {interface['mac_address']} - {interface['ip_address']}")
+
+
     if os.path.exists(logs.LOG_FILE):
         return
            
@@ -45,15 +63,6 @@ def setUp():
     # Create the file
     with open(logs.LOG_FILE, 'w') as file:
         pass
-    
-    name = str(uuid.uuid4())
-
-    with open("/etc/hosts", 'a') as file:
-        file.write("127.0.1.1\t\t" + name)
-    
-    with open("/etc/hostname", 'w') as file:
-        file.write(name)
-    log(log_file).info(f"{name} - is set as Hostname")
 
 if __name__ == '__main__':
     

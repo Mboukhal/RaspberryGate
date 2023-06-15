@@ -1,16 +1,14 @@
 #!/bin/bash
 
-#!/bin/bash
 
 NAME='gate'
 installPath='/usr/bin/gateRp'
 
 # check permissions
-# if [ "$EUID" -ne 0 ]
-#   then echo "Please run as root"
-#   exit 127
-# fi
-
+if [ "$EUID" -ne 0 ]
+  then echo "Please run as root"
+  exit 127
+fi
 
 if [ "$1" = "-rm" ]; then
 
@@ -23,21 +21,15 @@ if [ "$1" = "-rm" ]; then
     exit 0
 fi
 
-# # set hostname
-# echo "127.0.1.1		$NAME" >> /etc/hosts
-# echo "$NAME" > /etc/hostname
-
 SCRIPT=$(realpath "$0")
 SCRIPT_PATH=$(dirname "$SCRIPT")
 
-# install gate program
-# if [ ! -d "$installPath" ]; then
 
 # install python libraries:
 echo "Install python libraries..."
 apt update
 apt install -y python3.9 python3-pip
-# ln -sf /usr/bin/python3.9 /usr/bin/python
+
 python3 -m pip install evdev
 python3 -m pip install pyusb
 python3 -m pip install pyudev
@@ -45,6 +37,7 @@ python3 -m pip install requests
 python3 -m pip install flask
 python3 -m pip install python-dotenv
 python3 -m pip install watchdog
+python3 -m pip install netifaces
 
 # copy project directory:
 echo "Copying project directory..."
@@ -79,12 +72,4 @@ systemctl daemon-reload
 echo "Enable the service..."
 systemctl enable $NAME.service
 systemctl start $NAME.service
-#   exit 0
-# fi
-
-# INPUT=''
-# echo -n "To unistalling enter 'Y', (default: N): "
-# read  INPUT
-# [ "$INPUT" == "Y" -o "$INPUT" == "y" ] || exit 0
-
 
