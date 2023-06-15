@@ -2,6 +2,12 @@
 
 RaspberryGate is a gate control system designed specifically for use in the 1337 School. It is developed to replace the outdated gate badges system and seamlessly integrate with the infrastructure of the school. This repository contains the source code and installation script for RaspberryGate, which utilizes a Raspberry Pi along with an RFID USB reader, USB ports, and relays.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Logs](#logs)
+
 ## Installation
 
 To install RaspberryGate, follow these steps:
