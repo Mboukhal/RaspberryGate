@@ -22,7 +22,6 @@ def collectId( device ):
             ev = evdev.categorize(event)
             data = parssId( ev )
             if data:
-                print (data)
                 if len(data) == 1 and data.isnumeric():
                     dataId += data
                 elif data:
