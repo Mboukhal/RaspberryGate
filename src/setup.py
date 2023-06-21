@@ -2,7 +2,7 @@
 
 import extractData as exd
 from dotenv import load_dotenv
-from logs import log
+import logs
 import gpioControl as gc
 import uuid
 import os
@@ -17,21 +17,21 @@ def setUp():
  
     # try load env
     if not load_dotenv(dotenv_path=ENV_FILE):
-        log(LOG_FILE).info("fail loading env file")
+        logs.log(LOG_FILE).info("fail loading env file")
         exit(1)
     
     endpoint = os.getenv("ENDPOINT")
 
     # cheak for valide endpoint env 
     if not endpoint:
-        log(LOG_FILE).info("None valide Endpoit")
+        logs.log(LOG_FILE).info("None valide Endpoit")
         exit(2)
 
     token_in = os.getenv("TOKEN_IN")
     token_out = os.getenv("TOKEN_OUT")
     # cheak for valide token env 
     if token_in == None and token_out == None:
-        log(LOG_FILE).info("None valide Token")
+        logs.log(LOG_FILE).info("None valide Token")
         exit(3)
 
     # initialize GPIO
@@ -48,13 +48,13 @@ def setUp():
     with open("/etc/hostname", 'w') as file:
         file.write(hostname)
 
-    log(LOG_FILE).info(f"{hostname} - is set as Hostname")
+    logs.log(LOG_FILE).info(f"{hostname} - is set as Hostname")
 
     interface_details = exd.get_interface_details()
     for interface in interface_details:
-        log(LOG_FILE).info(f"{interface['interface']} - {interface['mac_address']} - {interface['ip_address']}")
+        logs.log(LOG_FILE).info(f"{interface['interface']} - {interface['mac_address']} - {interface['ip_address']}")
 
-    if os.path.exists(logs.LOG_FILE):
+    if os.path.exists(log.LOG_FILE):
         return
            
     os.mkdir(logs.LOG_FILE[0:-9])
