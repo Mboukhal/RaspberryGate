@@ -1,13 +1,13 @@
 #!/usr/bin/python
 
 import device
-from setup import setup
-
+from logs import log
+import setup
 
 if __name__ == '__main__':
     
     # check all setup 
-    setUp()
+    setup.setUp()
     
     thread_list = []
     
@@ -16,6 +16,6 @@ if __name__ == '__main__':
     # to update thread's list
     while True:
         connected_usb_devices = device.get_connected_usb_devices()
-        log(log_file).info(f"new decies connected - {connected_usb_devices}")
+        log(setup.ENV_FILE).info(f"new decies connected - {connected_usb_devices}")
         thread_list = device.reset_threads(thread_list, connected_usb_devices)
         device.wait_for_usb_connection_or_disconnection()
