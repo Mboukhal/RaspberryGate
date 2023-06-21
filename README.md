@@ -12,12 +12,17 @@ RaspberryGate is a gate control system designed specifically for use in the 1337
 
 To install RaspberryGate, follow these steps:
 
-1. Clone the repository:
+1. Update and install git:
+   ```
+   sudo apt-get update; sudo apt-get install -y git
+   ```
+
+2. Clone the repository:
    ```
    git clone https://github.dev/Mboukhal/RaspberryGate
    ```
 
-2. Run the installation script with root privileges:
+3. Run the installation script with root privileges:
    ```
    sudo bash RaspberryGate/install.sh
    ```
