@@ -2,7 +2,7 @@
 
 import extractData as exd
 from dotenv import load_dotenv
-import logs as log
+from logs import log
 import gpioControl as gc
 import uuid
 import os
