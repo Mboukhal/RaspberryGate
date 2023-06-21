@@ -1,64 +1,60 @@
-import logs
-import pyudev, threading
+#!/usr/bin/python
+
 import evdev
-import ctypes
-import extractData as exd
+import requests
+import gpioControl as gc
+import requistAccess as req
+from logs import log
+import netifaces
 
 
-def get_connected_usb_devices():
+def	collectId( device ):
 
-    '''get usb device'''
-    devices = [evdev.InputDevice(device) for device in evdev.list_devices()]
-    usb_devices = [device for device in devices if 'usb' in device.phys.lower()]
-    return usb_devices
+    '''collect id from usb RFID reader character by character 
+        as keyboard keys click's'''
+    dataId = ''
+    try:
+        # collect data from usb file
+        for event in device.read_loop():
+            ev = evdev.categorize(event)
+            data = parssId( ev )
+            if isinstance(ev, evdev.events.KeyEvent) and ev.keystate:
+                data = ev.keycode[-1]
+            if data and len(data) == 1 and data.isnumeric():
+                dataId += data
+            elif data:
+                # try to open gate
+                gate = req.isValid( dataId, device.phys )
+                if gate == -1:
+                    log().info(f"{dataId} - Access denied")
+                dataId = ''
+    except:
+        pass
 
-def wait_for_usb_connection_or_disconnection(connected=True):
+def get_interface_details():
 
-    '''wait for usb ports updates'''
-    context = pyudev.Context()
-    monitor = pyudev.Monitor.from_netlink(context)
-    monitor.filter_by(subsystem='usb')
+    '''get interface info'''
+    interfaces = netifaces.interfaces()
 
-    condition = threading.Condition()
+    interface_details = []
+    for interface in interfaces:
 
-    def device_event(observer, device):
-        if (connected and device.action == 'add') or (connected and device.action == 'remove'):
-            with condition:
-                condition.notify()
+        if interface != "lo":
+            details = {"interface": interface}
+            # Get IP address
+            if netifaces.AF_INET in netifaces.ifaddresses(interface):
+                ip_address = netifaces.ifaddresses(interface)[netifaces.AF_INET][0]['addr']
+                details["ip_address"] = ip_address
+            else:
+                details["ip_address"] = None
 
-    observer = pyudev.MonitorObserver(monitor, device_event)
-    observer.start()
+            # Get MAC address
+            if netifaces.AF_LINK in netifaces.ifaddresses(interface):
+                mac_address = netifaces.ifaddresses(interface)[netifaces.AF_LINK][0]['addr']
+                details["mac_address"] = mac_address
+            else:
+                details["mac_address"] = None
 
-    with condition:
-        condition.wait()
+            interface_details.append(details)
 
-    observer.stop()
-    
-
-def terminate_thread(thread):
-
-    '''Terminate a thread forcefully.'''
-    if not thread.is_alive():
-        return
-
-    thread_id = thread.ident
-    res = ctypes.pythonapi.PyThreadState_SetAsyncExc(ctypes.c_long(thread_id), ctypes.py_object(SystemExit))
-    if res > 1:
-        ctypes.pythonapi.PyThreadState_SetAsyncExc(ctypes.c_long(thread_id), 0)
-        logs.log('Failed to terminate thread:', thread)
-      
-def reset_threads( old_threads_list, new_devices_list ):
-    
-    '''update thread list'''
-    if old_threads_list:
-        for thread in old_threads_list:
-            terminate_thread(thread)
-    
-    new_threads_list = []
-    
-    for device in new_devices_list:
-        thread = threading.Thread(target=exd.collectId, args=(device,))
-        thread.start()
-        new_threads_list.append(thread)
-    
-    return new_threads_list
+    return interface_details
