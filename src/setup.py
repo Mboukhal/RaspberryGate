@@ -54,11 +54,11 @@ def setUp():
     for interface in interface_details:
         logs.log(LOG_FILE).info(f"{interface['interface']} - {interface['mac_address']} - {interface['ip_address']}")
 
-    if os.path.exists(log.LOG_FILE):
+    if os.path.exists(LOG_FILE):
         return
            
     os.mkdir(logs.LOG_FILE[0:-9])
 
     # Create the file
-    with open(logs.LOG_FILE, 'w') as file:
+    with open(LOG_FILE, 'w') as file:
         pass
