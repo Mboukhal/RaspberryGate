@@ -1,19 +1,7 @@
-import logging
+import datetime
 
-def log(log_file="/var/log/gate/gate.log"):
-
-    '''log initializing'''
-    # create a logger and set its level
-    logger = logging.getLogger('gate')
-    logger.setLevel(logging.INFO)
-
-    # create a file handler and set its level
-    file_handler = logging.FileHandler(log_file)
-    # file_handler.setLevel(logging.INFO)
-
-    # create a formatter and set it on the handler
-    formatter = logging.Formatter('%(asctime)s: %(message)s')
-    file_handler.setFormatter(formatter)
-    # add the handler to the logger
-    logger.addHandler(file_handler)
-    return logger
+def log(string, file_path='/var/log/gate/gate.log'):
+    timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    log_message = f"[{timestamp}] - {string}"
+    with open(file_path, "a") as file:
+        file.write(log_message + "\n")
