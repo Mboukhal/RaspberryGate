@@ -1,5 +1,5 @@
 import requests
-import logs as log
+import logs
 import os
 import gpioControl as gc
 import usb.core
@@ -16,7 +16,9 @@ def isValid( idCard, device ):
     token_in = os.getenv("TOKEN_IN")
     token_out = os.getenv("TOKEN_OUT")
     
+    
     # set token to avalable token  
+    gate = 0
     if token_in:
         token = token_in
         gate = 14
@@ -33,8 +35,8 @@ def isValid( idCard, device ):
                 gate = 15
                 token = token_out
 
-    if not endpoint or not token:
-        log().info("Fialed to load ENDPOINT or TOKEN variables.")
+    if not endpoint or not token or not idCard:
+        logs.log("Fialed to load ENDPOINT or TOKEN or idCard variables.")
         return 0
     
     data = {
@@ -44,13 +46,14 @@ def isValid( idCard, device ):
 
     try:
         response = requests.post( endpoint, data=data )
+        
         if response.status_code == 200:
             gc.openGate(gate)
-            log().info(f"{dataId} - Access granted - {gate}")
-            return
+            logs.log(f"{str(idCard)} - Access granted - {str(gate)}")
+            return 1
         else:
             return -1
-    except:
+    except :    
         pass
-    log().info("Failed to connect to the API server")
+    logs.log("Failed to connect to the API server")
     return 0
