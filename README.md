@@ -19,7 +19,7 @@ To install RaspberryGate, follow these steps:
 
 2. Clone the repository:
    ```
-   git clone https://github.dev/Mboukhal/RaspberryGate
+   git clone [https://github.dev/Mboukhal/RaspberryGate](https://github.com/Mboukhal/RaspberryGate.git)
    ```
 
 3. Run the installation script with root privileges:
