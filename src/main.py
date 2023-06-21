@@ -16,6 +16,7 @@ if __name__ == '__main__':
     # to update thread's list
     while True:
         connected_usb_devices = device.get_connected_usb_devices()
-        log(setup.ENV_FILE).info(f"new decies connected - {connected_usb_devices}")
+        if connected_usb_devices:
+            log(setup.LOG_FILE).info(f"new decies connected - {connected_usb_devices}")
         thread_list = device.reset_threads(thread_list, connected_usb_devices)
         device.wait_for_usb_connection_or_disconnection()
