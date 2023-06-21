@@ -1,7 +1,7 @@
 #!/usr/bin/python
 
 import device
-from logs import log
+import logs
 import setup
 
 if __name__ == '__main__':
@@ -17,6 +17,6 @@ if __name__ == '__main__':
     while True:
         connected_usb_devices = device.get_connected_usb_devices()
         if connected_usb_devices:
-            log(setup.LOG_FILE).info(f"new decies connected - {connected_usb_devices}")
+            logs.log(f"new decies connected - {connected_usb_devices}")
         thread_list = device.reset_threads(thread_list, connected_usb_devices)
         device.wait_for_usb_connection_or_disconnection()
