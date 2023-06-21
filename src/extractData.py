@@ -27,9 +27,6 @@ def	collectId( device ):
                 gate = req.isValid( dataId, device.phys )
                 if gate == -1:
                     log().info(f"{dataId} - Access denied")
-                elif gate:
-                    log().info(f"{dataId} - Access granted - {gate}")
-                    gc.openGate(gate)
                 dataId = ''
     except:
         pass

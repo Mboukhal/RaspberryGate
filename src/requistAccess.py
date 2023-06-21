@@ -1,6 +1,7 @@
 import requests
 import logs as log
 import os
+import gpioControl as gc
 import usb.core
 
 def isValid( idCard, device ):
@@ -44,7 +45,9 @@ def isValid( idCard, device ):
     try:
         response = requests.post( endpoint, data=data )
         if response.status_code == 200:
-            return gate
+            gc.openGate(gate)
+            log().info(f"{dataId} - Access granted - {gate}")
+            return
         else:
             return -1
     except:
