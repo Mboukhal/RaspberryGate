@@ -2,6 +2,7 @@ from logs import log
 import pyudev, threading
 import evdev
 import ctypes
+import extractData as exd
 
 
 def get_connected_usb_devices():
