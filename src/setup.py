@@ -10,11 +10,17 @@ import os
 
 ENV_FILE = f'/boot/gate.env'
 LOG_FILE = f'/boot/gate.log'
+LOG_FILE_SYSTEM = f'/var/log/gate/gate.log'
 
 def setUp():
     
     '''setup and load env file every start'''
- 
+    if not os.path.exists(LOG_FILE):
+        interface_details = exd.get_interface_details()
+        for interface in interface_details:
+            if interface:
+                logs.log(f"{interface['interface']} - {interface['mac_address']} - {interface['ip_address']}"
+                        , file_path=LOG_FILE)
     # try load env
     if not load_dotenv(dotenv_path=ENV_FILE):
         logs.log("fail loading env file", file_path=LOG_FILE)
@@ -49,19 +55,13 @@ def setUp():
         logs.log(f"{hostname} - is set as Hostname", file_path=LOG_FILE)
         
 
-    interface_details = exd.get_interface_details()
-    for interface in interface_details:
-        if interface:
-            logs.log(f"{interface['interface']} - {interface['mac_address']} - {interface['ip_address']}"
-                     , file_path=LOG_FILE)
-
-    if os.path.exists(LOG_FILE):
+    if os.path.exists(LOG_FILE_SYSTEM):
         return
            
-    os.mkdir(logs.LOG_FILE[0:-9])
+    os.mkdir(LOG_FILE_SYSTEM[0:-9])
 
     # Create the file
-    with open(LOG_FILE, 'w') as file:
+    with open(LOG_FILE_SYSTEM, 'w') as file:
         pass
 
 
