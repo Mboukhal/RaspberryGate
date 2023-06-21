@@ -21,16 +21,19 @@ def collectId( device ):
         for event in device.read_loop():
             ev = evdev.categorize(event)
             data = parssId( ev )
-            if data and len(data) == 1 and data.isnumeric():
-                dataId += data
-            elif data:
-                # try to open gate
-                gate = req.isValid( dataId, device.phys )
-                if gate == -1:
-                    log(f"{dataId} - Access denied")
-                dataId = ''
-    except:
-        pass
+            if data:
+                print (data)
+                if len(data) == 1 and data.isnumeric():
+                    dataId += data
+                elif data:
+                    # try to open gate
+                    gate = req.isValid( dataId, device.phys )
+                    if gate == -1:
+                        log(f"{dataId} - Access denied")
+                    if data == 'R':
+                        dataId = ''
+    except Exception as e:
+        log("Exception: {str(e)}")
 
 def get_interface_details():
 

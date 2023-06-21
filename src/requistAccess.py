@@ -26,7 +26,7 @@ def isValid( idCard, device ):
 
     # cheak usb in half out or half in ports
     if token_out and token_in:
-        portCount = (usb.core.find()).count("bLength")
+        portCount = str(usb.core.find()).count("bLength")
         if portCount > 1:
             port = int(device[19])
             if port > (portCount / 2): 
@@ -50,7 +50,7 @@ def isValid( idCard, device ):
             return
         else:
             return -1
-    except:
-        pass
+    except Exception as e:
+        logs.log("Exception: {str(e)}")
     logs.log("Failed to connect to the API server")
     return 0
