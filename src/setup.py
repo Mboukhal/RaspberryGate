@@ -39,16 +39,15 @@ def setUp():
 
     hostname = os.getenv("HOSTNAME")
 
-    if not hostname:
-        hostname = str(uuid.uuid4())
+    if hostname and not check_string_in_file('/etc/hostname', hostname):
+        with open("/etc/hostname", 'w') as file:
+            file.write(hostname)
+        hostname = "127.0.1.1\t\t" + hostname + '\n'
+        with open("/etc/hosts", 'a') as file:
+            file.write(hostname)
+        
 
-    with open("/etc/hosts", 'a') as file:
-        file.write("127.0.1.1\t\t" + hostname)
-    
-    with open("/etc/hostname", 'w') as file:
-        file.write(hostname)
-
-    logs.log(LOG_FILE).info(f"{hostname} - is set as Hostname")
+        logs.log(LOG_FILE).info(f"{hostname} - is set as Hostname")
 
     interface_details = exd.get_interface_details()
     for interface in interface_details:
@@ -62,3 +61,11 @@ def setUp():
     # Create the file
     with open(LOG_FILE, 'w') as file:
         pass
+
+
+def check_string_in_file(filename, search_string):
+    with open(filename, 'r') as file:
+        for line in file:
+            if search_string in line:
+                return True
+    return False
