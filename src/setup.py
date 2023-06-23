@@ -30,8 +30,15 @@ def setUp():
 
     # cheak for valide endpoint env 
     if not endpoint:
-        logs.log("None valide Endpoit", file_path=LOG_FILE)
+        logs.log("None valide ENDPOINT", file_path=LOG_FILE)
         exit(2)
+        
+    relay = os.getenv("RELAY_TYPE")
+        
+    # cheak for valide relay env 
+    if not relay or relay != "PSRT" and relay != "GSRT":
+        logs.log(f"None valide RELAY_TYPE", file_path=LOG_FILE)
+        exit(3)
 
     token_in = os.getenv("TOKEN_IN")
     token_out = os.getenv("TOKEN_OUT")

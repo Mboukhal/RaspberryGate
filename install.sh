@@ -41,8 +41,8 @@ python3 -m pip install netifaces
 # copy project directory:
 echo "Copying project directory..."
 mkdir -p $installPath
-cp -r $SCRIPT_PATH/src/* $installPath
-chmod +x $installPath/main.py
+cp -r $SCRIPT_PATH/* $installPath
+chmod +x $installPath/src/main.py
 mkdir -p /var/log/$NAME/
 mv /var/log/$NAME/$NAME.log /var/log/$NAME/$NAME.log.$(date +"%F_%T").backup &> /dev/null
 touch /var/log/$NAME/$NAME.log
@@ -58,7 +58,7 @@ echo "Type=idle" >> /etc/systemd/system/$NAME.service
 echo "User=root" >> /etc/systemd/system/$NAME.service
 echo "Restart=always" >> /etc/systemd/system/$NAME.service
 echo "RestartSec=2" >> /etc/systemd/system/$NAME.service
-echo "ExecStart=sudo python3 $installPath/main.py" >> /etc/systemd/system/$NAME.service
+echo "ExecStart=sudo bash $installPath/run.sh" >> /etc/systemd/system/$NAME.service
 echo "" >> /etc/systemd/system/$NAME.service
 echo "[Install]" >> /etc/systemd/system/$NAME.service
 echo "WantedBy=multi-user.target" >> /etc/systemd/system/$NAME.service
