@@ -45,7 +45,7 @@ def setUp():
     # cheak for valide token env 
     if token_in == None and token_out == None:
         logs.log("None valide Token", file_path=LOG_FILE)
-        exit(3)
+        exit(4)
 
     # initialize GPIO
     gc.initGpio()
