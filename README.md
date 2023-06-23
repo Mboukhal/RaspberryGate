@@ -33,7 +33,7 @@ RaspberryGate utilizes relays connected to specific GPIO pins on the Raspberry P
 
 Make sure the relays are correctly connected to the respective GPIO pins on the Raspberry Pi before proceeding.
 
-The configuration is done through the `/boot/gate.env` file. This file needs to contain the `ENDPOINT` and at least one of the `TOKEN_IN` or `TOKEN_OUT` entries and relay type `RELAY_TYPE="GSRT"` for Ground Sequence Relay Trip or `RELAY_TYPE="PSRT"` for Positive Sequence Relay Trip.
+The configuration is done through the `/boot/gate.env` file. This file needs to contain the `ENDPOINT` and at least one of the `TOKEN_IN` or `TOKEN_OUT` entries and relay type `RELAY_TYPE="GSRT"` for Ground Sequence Relay Trip or `RELAY_TYPE="PSRT"` for Positive Sequence Relay Trip (if you use GSRT try to make VCC to 3.3V).
 
 Modify the `gate.env` file to set up the necessary parameters. Ensure that the file contains the following entries:
 
