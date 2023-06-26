@@ -64,9 +64,10 @@ def setUp():
 
     if os.path.exists(LOG_FILE_SYSTEM):
         return
-           
-    os.mkdir(LOG_FILE_SYSTEM[0:-9])
-
+    try:       
+        os.mkdir(LOG_FILE_SYSTEM[0:-9])
+    except:
+        pass
     # Create the file
     with open(LOG_FILE_SYSTEM, 'w') as file:
         pass
