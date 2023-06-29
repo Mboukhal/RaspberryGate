@@ -44,6 +44,7 @@ mkdir -p $installPath
 cp -ra $SCRIPT_PATH/. $installPath
 chmod +x $installPath/src/main.py
 chmod +x $installPath/run.sh
+chmod +x $installPath/update.sh
 mkdir -p /var/log/$NAME/
 mv /var/log/$NAME/$NAME.log /var/log/$NAME/$NAME.log.$(date +"%F_%T").backup &> /dev/null
 touch /var/log/$NAME/$NAME.log
