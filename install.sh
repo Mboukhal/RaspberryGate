@@ -10,6 +10,10 @@ if [ "$EUID" -ne 0 ]
   exit 127
 fi
 
+if [ "$1" = "-update" ]; then
+     exit 0
+fi
+
 if [ "$1" = "-rm" ]; then
 
     echo "Unistalling..."
