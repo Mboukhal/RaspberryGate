@@ -37,7 +37,6 @@ python3 -m pip install evdev
 python3 -m pip install pyusb
 python3 -m pip install pyudev
 python3 -m pip install requests
-python3 -m pip install flask
 python3 -m pip install python-dotenv
 python3 -m pip install watchdog
 python3 -m pip install netifaces
