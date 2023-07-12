@@ -43,7 +43,7 @@ def isValid( idCard, device ):
     }
 
     try:
-        response = requests.post( endpoint, data=data )
+        response = requests.post( endpoint, data=data, timeout=3 )
         if response.status_code == 200:
             gc.openGate(gate)
             logs.log(f"{str(idCard)} - Access granted - {str(gate)}")
