@@ -63,7 +63,7 @@ echo "Set gate in startup..."
 
 GATE_SERVICE_FILE="/etc/systemd/system/$NAME.service"
 cat << __EOF > $GATE_SERVICE_FILE
-[Unit]" >> /etc/systemd/system/$NAME.service
+[Unit]
 Description=$NAME
 After=multi-user.target
 
