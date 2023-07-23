@@ -1,6 +1,6 @@
 # RaspberryGate
 
-RaspberryGate is a gate control system designed specifically for use in the 1337 School. It is developed to replace the outdated gate badges system and seamlessly integrate with the infrastructure of the school. This repository contains the source code and installation script for RaspberryGate, which utilizes a Raspberry Pi along with an RFID USB reader, USB ports, and relays.
+RaspberryGate is a gate control system designed specifically for use in the 1337 School. It is developed to replace the outdated gate badges system and seamlessly integrate with the infrastructure of the school. This repository contains the source code and installation script for RaspberryGate, which utilizes a Raspberry Pi along with an RFID USB reader, and relays.
 
 ## Table of Contents
 
@@ -55,6 +55,6 @@ RaspberryGate generates two types of logs:
 
 - **Main Logs**: The main logs are located in `/var/log/gate/gate.log`. They include details about user ID validation, error logs, and other relevant information.
 
-Feel free to explore the repository and make any necessary changes to adapt RaspberryGate to the specific requirements of the 1337 School.
+Feel free to Fork the repository and make any necessary changes to adapt RaspberryGate to the specific requirements of your system needs it will be updated automaticly from your fork after restarting, this repository is specifically made for 1337 School.
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
