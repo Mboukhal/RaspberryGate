@@ -16,6 +16,7 @@ def collectId( device ):
     '''collect id from usb RFID reader character by character 
         as keyboard keys click's'''
     dataId = ''
+    # lastOne = ''
     try:
         # collect data from usb file
         for event in device.read_loop():
@@ -24,9 +25,11 @@ def collectId( device ):
             if data:
                 if len(data) == 1 and data.isnumeric():
                     dataId += data
-                elif data:
+                elif data: # and data != lastOne:
                     # try to open gate
                     gate = req.isValid( dataId, device.phys )
+                    # if gate:
+                    #     lastOne = dataId
                     if gate == -1:
                         log(f"{dataId} - Access denied")
                     if data == 'R':

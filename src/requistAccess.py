@@ -47,7 +47,7 @@ def isValid( idCard, device ):
         if response.status_code == 200:
             gc.openGate(gate)
             logs.log(f"{str(idCard)} - Access granted - {str(gate)}")
-            return
+            return 1
         else:
             return -1
     except Exception as e:
