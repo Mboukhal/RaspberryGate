@@ -7,8 +7,6 @@ import requistAccess as req
 from logs import log
 import netifaces
 
-# from datetime import datetime
-
 def parssId(ev):
     if isinstance(ev, evdev.events.KeyEvent) and ev.keystate:
         return ev.keycode[-1]
@@ -18,22 +16,19 @@ def collectId( device ):
     '''collect id from usb RFID reader character by character 
         as keyboard keys click's'''
     dataId = ''
-    # lastOne = ['', datetime.now()]
-    # lastOne = ''
     try:
         # collect data from usb file
         for event in device.read_loop():
             ev = evdev.categorize(event)
             data = parssId( ev )
-            # if dataId == lastOne:
-            #     dataId = ''
             if len(data) == 1 and data.isnumeric():
                 dataId += data
             else:
                 # try to open gate
                 gate = req.isValid( dataId, device.phys )
-                # if gate:
-                #     lastOne = dataId
+                if gate:
+                    while device.read_loop():
+                        pass
                 if gate == -1:
                     log(f"{dataId} - Access denied")
                 if data == 'R':
