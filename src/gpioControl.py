@@ -18,7 +18,7 @@ def openGate( relay ):
         relayOff = GPIO.LOW
     
     GPIO.output( relay, relayOn )
-    sleep( 0.8 )
+    sleep( 1 )
     GPIO.output( relay, relayOff )
 
 def initGpio():
