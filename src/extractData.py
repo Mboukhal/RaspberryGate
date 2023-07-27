@@ -7,34 +7,54 @@ import requistAccess as req
 from logs import log
 import netifaces
 
-def parssId(ev):
+from datetime import datetime as dt
+
+def parssId(event):
+    
+    ev = evdev.categorize(event)
     if isinstance(ev, evdev.events.KeyEvent) and ev.keystate:
         return ev.keycode[-1]
 
-def collectId( device ):
+LAST_ID = ['', dt.now()]
 
+def checkId (idCard):
+    
+    if LAST_ID[0] != idCard:
+        return True
+    diff = (dt.now() - LAST_ID[1]).total_seconds()
+    if diff < 8:
+        return False
+    return True
+
+def collectId( device ):
+    global LAST_ID
+    
     '''collect id from usb RFID reader character by character 
         as keyboard keys click's'''
     dataId = ''
     try:
         # collect data from usb file
         for event in device.read_loop():
-            ev = evdev.categorize(event)
-            data = parssId( ev )
-            if len(data) == 1 and data.isnumeric():
+            data = parssId( event )
+            if data and data.isnumeric():
                 dataId += data
-            else:
-                # try to open gate
-                gate = req.isValid( dataId, device.phys )
-                if gate:
-                    while device.read_loop():
-                        pass
-                if gate == -1:
-                    log(f"{dataId} - Access denied")
-                if data == 'R':
+            elif data == 'R' and dataId:
+                
+                if checkId(dataId):
+                    
+                    # try to open gate
+                    LAST_ID = [dataId, dt.now()]
+                    gate = req.isValid( dataId, device.phys )
+                    if gate == -1:
+                        log(f"{dataId} - Access denied")
                     dataId = ''
+                else:
+                    dataId = ''
+            elif len(dataId) > 19:
+                dataId = ''
+                    
     except Exception as e:
-        log("Exception: {str(e)}")
+        log(f"Exception: {e}")
 
 def get_interface_details():
 
