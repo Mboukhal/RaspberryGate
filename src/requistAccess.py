@@ -33,8 +33,11 @@ def isValid( idCard, device ):
                 gate = 15
                 token = token_out
 
-    if not endpoint or not token or not idCard:
-        logs.log("Fialed to load ENDPOINT or TOKEN variables.")
+    if not idCard:
+        return 0
+
+    if not endpoint or not token:
+        logs.log(f"Fialed to load ENDPOINT'{endpoint}' or TOKEN'{token}'.")
         return 0
     
     data = {
@@ -51,6 +54,6 @@ def isValid( idCard, device ):
         else:
             return -1
     except Exception as e:
-        logs.log("Exception: {str(e)}")
+        logs.log(f"Exception: {e}")
     logs.log("Failed to connect to the API server")
     return 0
