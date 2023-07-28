@@ -58,5 +58,3 @@ RaspberryGate generates two types of logs:
 Feel free to Fork the repository and make any necessary changes to adapt RaspberryGate to the specific requirements of your system needs it will be updated automaticly from your fork after restarting, this repository is specifically made for 1337 School.
 
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-
-Test auto-update
