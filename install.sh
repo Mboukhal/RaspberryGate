@@ -27,7 +27,6 @@ if [ -d "$INSTALL_PATH" ]; then
     systemctl stop $GITNAME.service
 fi
 
-git config --global --add safe.directory $INSTALL_PATH
 echo "Install python libraries..."
 apt update
 apt install -y python3.9 python3-pip
@@ -47,6 +46,7 @@ python3 -m pip install evdev pyusb pyudev requests python-dotenv watchdog netifa
 # copy project directory:
 echo "Copying project directory..."
 mkdir -p $INSTALL_PATH
+git config --global --add safe.directory $INSTALL_PATH
 chmod +x ./src/main.py
 chmod +x ./run.sh
 chmod +x ./update.sh
