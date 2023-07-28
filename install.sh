@@ -25,19 +25,16 @@ if [ -d "$INSTALL_PATH" ]; then
     rm -rf /etc/systemd/system/$GITNAME.service
     systemctl disable $GITNAME.service
     systemctl stop $GITNAME.service
-
-else
-
-  git config --global --add safe.directory $INSTALL_PATH
-  echo "Install python libraries..."
-  apt update
-  apt install -y python3.9 python3-pip
-
-  apt upgrade -y &
-
-  python3 -m pip install evdev pyusb pyudev requests python-dotenv watchdog netifaces
-
 fi
+
+git config --global --add safe.directory $INSTALL_PATH
+echo "Install python libraries..."
+apt update
+apt install -y python3.9 python3-pip
+
+python3 -m pip install evdev pyusb pyudev requests python-dotenv watchdog netifaces
+
+
 
 # python3 -m pip install evdev
 # python3 -m pip install pyusb
