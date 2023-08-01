@@ -8,6 +8,8 @@ RaspberryGate is a gate control system designed specifically for use in the 1337
 - [Configuration](#configuration)
 - [Logs](#logs)
 
+![Win32 Disk Imager](https://media.licdn.com/dms/image/D4E22AQHkdOfjqoPjIw/feedshare-shrink_1280/0/1687813798877?e=1694044800&v=beta&t=-S1iK7fRkM-QM6tisNCDWKOjvMhPLY0oehkOPVXQmXc)
+
 ## Installation
 
 To install RaspberryGate, follow these steps:
