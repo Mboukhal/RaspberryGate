@@ -8,7 +8,10 @@ RaspberryGate is a gate control system designed specifically for use in the 1337
 - [Configuration](#configuration)
 - [Logs](#logs)
 
-![Win32 Disk Imager](https://media.licdn.com/dms/image/D4E22AQHkdOfjqoPjIw/feedshare-shrink_1280/0/1687813798877?e=1694044800&v=beta&t=-S1iK7fRkM-QM6tisNCDWKOjvMhPLY0oehkOPVXQmXc)
+![System](https://media.licdn.com/dms/image/D4E22AQHkdOfjqoPjIw/feedshare-shrink_1280/0/1687813798877?e=1694044800&v=beta&t=-S1iK7fRkM-QM6tisNCDWKOjvMhPLY0oehkOPVXQmXc)
+
+![Gates](https://media.licdn.com/dms/image/D4E22AQEArxy46ehvIg/feedshare-shrink_1280/0/1687813798903?e=1694044800&v=beta&t=KKeThn2Ako5Dmt8hX1oFzs3IFOzgEM40M6v1EWDy5-Y)
+
 
 ## Installation
 
