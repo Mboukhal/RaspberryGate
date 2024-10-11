@@ -31,7 +31,7 @@ echo "Install python libraries..."
 apt update
 apt install -y python3.9 python3-pip
 
-python3 -m pip install evdev pyusb pyudev requests python-dotenv watchdog netifaces
+python3 -m pip install evdev pyusb pyudev requests python-dotenv watchdog netifaces websockets
 
 
 
