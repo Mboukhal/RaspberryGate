@@ -1,9 +1,0 @@
-services:
-  app:
-    image: python:3.9
-    volumes:
-      - .:/app
-    working_dir: /app
-    command: sh -c "pip install -r requirements.txt && python testServer.py"
-    ports:
-      - 8080:8080

@@ -4,21 +4,24 @@ RaspberryGate is a gate control system designed specifically for use in the 1337
 
 ## Table of Contents
 
-- [Installation](#installation)
-- [Configuration](#configuration)
-- [Logs](#logs)
-
+- [RaspberryGate](#raspberrygate)
+  - [Table of Contents](#table-of-contents)
+  - [Installation](#installation)
+  - [Configuration](#configuration)
+  - [Logs](#logs)
 
 ## Installation
 
 To install RaspberryGate, follow these steps:
 
 1. Update and install git:
+
    ```
    sudo apt-get update; sudo apt-get install -y git
    ```
 
 2. Clone the repository:
+
    ```
    git clone https://github.com/Mboukhal/RaspberryGate.git
    ```
@@ -39,11 +42,12 @@ The configuration is done through the `/boot/gate.env` file. This file needs to 
 Modify the `gate.env` file to set up the necessary parameters. Ensure that the file contains the following entries:
 
 ```shell
-ENDPOINT="http://10.42.6.87"
-RELAY_TYPE="PSRT"
-TOKEN_IN="token@in"
-TOKEN_OUT="token@out"
-HOSTNAME="Gate"
+ENDPOINT="133.7.42.6/ws"   # with no protocole example `ws://`
+RELAY_TYPE="PSRT"          # GSRT or PSRT
+TOKEN_IN="token@in"        # in door token
+TOKEN_OUT="token@out"      # out door token
+HOSTNAME="Gate"            # host name
+ROOM="name_room_ws"        # room websocket
 ```
 
 Adjust the values in the `gate.env` file according to your setup, including the endpoint and token values. The `HOSTNAME` can be customized to your desired gate name.
