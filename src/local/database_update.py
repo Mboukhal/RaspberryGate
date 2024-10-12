@@ -5,6 +5,16 @@ import json
 import os
 from get_access import DB_FILE
 
+import sys
+
+LOG_DIR = '/var/log/gate/'
+
+# Get the parent directory of the current file (which is `src/local`)
+current_dir = os.path.dirname(os.path.abspath(__file__))
+
+# Add the parent directory (`src`) to the Python path
+sys.path.append(os.path.abspath(os.path.join(current_dir, '..')))
+from logs import log
 # file_path = inspect.getfile(inspect.currentframe())
 # current_dir = os.path.dirname(os.path.abspath(file_path))
 # DB_FILE = os.path.join(current_dir, 'badges.db')
@@ -25,52 +35,55 @@ def init_db():
     conn.close()
 
 # Add badge to database
-def add_badge(badge_id):
-    conn = sqlite3.connect(DB_FILE)
-    cursor = conn.cursor()
-    
+def add_badge(badge_id, cursor):
     cursor.execute('INSERT OR IGNORE INTO badges (badge_id) VALUES (?)', (badge_id,))
-    conn.commit()
-    conn.close()
+
 
 # Remove badge from database
-def remove_badge(badge_id):
-    conn = sqlite3.connect(DB_FILE)
-    cursor = conn.cursor()
-    
+def remove_badge(badge_id, cursor):
     cursor.execute('DELETE FROM badges WHERE badge_id = ?', (badge_id,))
-    conn.commit()
-    conn.close()
+
 
 # Handle received data and update database accordingly
 async def process_data(data):
     # if database is not exists, initialize it
     if not os.path.exists(DB_FILE):
         init_db()
+    conn = sqlite3.connect(DB_FILE)
+    cursor = conn.cursor()
     for badge in data.get('data', []):
         badge_id = badge.get('badge-id')
         status = badge.get('status')
 
         if badge_id:
+            log(f"Badge ID: {'+' if status else '-'} {badge_id}", LOG_DIR + "database_update.log", expiration_days=10)
             if status:
-                print(f"Adding badge ID: {badge_id}")
-                add_badge(badge_id)
+                # print(f"Adding badge ID: {badge_id}")
+                add_badge(badge_id, cursor)
             else:
-                print(f"Removing badge ID: {badge_id}")
-                remove_badge(badge_id)
+                # print(f"Removing badge ID: {badge_id}")
+                remove_badge(badge_id, cursor)
+        conn.commit()
+    conn.close()
+
 
 # WebSocket client to listen and process incoming messages
 async def listen_and_update():
 
-    uri = "ws://localhost:8765"  # WebSocket server URL
-    # uri = "ws://" + os.getenv("ENDPOINT")  # WebSocket server URL
+    uri = "localhost:8765"  # WebSocket server URL
+    room = "room1" # Room name to join
+    # uri = os.getenv("ENDPOINT")  # WebSocket server URL
     # room = os.getenv("ROOM") # Room name to join
-    room = "room1"
+
+    if not room or not uri:
+        log("Missing environment variables: ENDPOINT '%s' or ROOM '%s'" % (uri, room), LOG_DIR + "error.log")
+        return
     
+    log(f"Connecting to WebSocket server: {uri}", LOG_DIR + "database_update.log")
     while True:
         try:
-            async with websockets.connect(uri) as websocket:
-                print("Connected to WebSocket")
+            async with websockets.connect("ws://" + uri) as websocket:
+                # print("Connected to WebSocket")
 
                 # Join the specified room
                 await websocket.send(room)
@@ -79,13 +92,13 @@ async def listen_and_update():
                     try:
                         message = await websocket.recv()
                         data = json.loads(message)
-                        print(f"Received data: {data}")
+                        # print(f"Received data: {data}")
                         await process_data(data)
                     except websockets.ConnectionClosed:
-                        print("Connection closed, reconnecting...")
+                        # print("Connection closed, reconnecting...")
                         break  # Break to reconnect to the server
         except Exception as e:
-            print(f".")
+            # print(f".")
             await asyncio.sleep(5)  # Wait before retrying
 
 # Initialize database and run WebSocket client
