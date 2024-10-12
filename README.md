@@ -42,12 +42,11 @@ The configuration is done through the `/boot/gate.env` file. This file needs to 
 Modify the `gate.env` file to set up the necessary parameters. Ensure that the file contains the following entries:
 
 ```shell
-ENDPOINT="133.7.42.6/ws"   # with no protocole example `ws://`
+ENDPOINT="133.7.42.6/ws/room/client-id"   # with no protocole example `ws://`
 RELAY_TYPE="PSRT"          # GSRT or PSRT
 TOKEN_IN="token@in"        # in door token
 TOKEN_OUT="token@out"      # out door token
 HOSTNAME="Gate"            # host name
-ROOM="name_room_ws"        # room websocket
 ```
 
 Adjust the values in the `gate.env` file according to your setup, including the endpoint and token values. The `HOSTNAME` can be customized to your desired gate name.

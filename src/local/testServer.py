@@ -42,7 +42,7 @@ async def broadcast_to_room(room_name):
 async def handler(websocket, path):
     try:
         # Server-side logic to assign room
-        room_name = "room1"  # You can change this logic to dynamically assign room names
+        room_name = "room0"  # You can change this logic to dynamically assign room names
         print(f"Assigning client to room: {room_name}")
 
         # Add the client to the specified room

@@ -34,16 +34,6 @@ def init_db():
     conn.commit()
     conn.close()
 
-# Add badge to database
-def add_badge(badge_id, cursor):
-    cursor.execute('INSERT OR IGNORE INTO badges (badge_id) VALUES (?)', (badge_id,))
-
-
-# Remove badge from database
-def remove_badge(badge_id, cursor):
-    cursor.execute('DELETE FROM badges WHERE badge_id = ?', (badge_id,))
-
-
 # Handle received data and update database accordingly
 async def process_data(data):
     # if database is not exists, initialize it
@@ -55,14 +45,18 @@ async def process_data(data):
         badge_id = badge.get('badge-id')
         status = badge.get('status')
 
-        if badge_id:
-            log(f"Badge ID: {'+' if status else '-'} {badge_id}", LOG_DIR + "database_update.log", expiration_days=10)
+        if badge_id is not None and status is not None:
+            log(f"Badge ID: {'+' if status else '-'} {badge_id}",  "database_update.log", expiration_days=10)
             if status:
                 # print(f"Adding badge ID: {badge_id}")
-                add_badge(badge_id, cursor)
+                # Add or update badge ID in the database
+                cursor.execute('INSERT OR IGNORE INTO badges (badge_id) VALUES (?)', (badge_id,))
             else:
                 # print(f"Removing badge ID: {badge_id}")
-                remove_badge(badge_id, cursor)
+                # Remove badge ID from the database
+                cursor.execute('DELETE FROM badges WHERE badge_id = ?', (badge_id,))
+        else:
+            log(f"Skipping badge ID: {badge_id}",  "database_update.log")
         conn.commit()
     conn.close()
 
@@ -71,24 +65,20 @@ async def process_data(data):
 async def listen_and_update():
 
     uri = "localhost:8765"  # WebSocket server URL
-    room = "room1" # Room name to join
-    # uri = os.getenv("ENDPOINT")  # WebSocket server URL
-    # room = os.getenv("ROOM") # Room name to join
+    # uri = os.environ.get("ENDPOINT")
 
-    if not room or not uri:
-        log("Missing environment variables: ENDPOINT '%s' or ROOM '%s'" % (uri, room), LOG_DIR + "error.log")
+    if not uri:
+        log("Missing environment variables: ENDPOINT '%s'" % (uri),  "error.log")
         return
     
-    log(f"Connecting to WebSocket server: {uri}", LOG_DIR + "database_update.log")
+    log(f"Connecting to WebSocket server: {uri}",  "database_update.log")
     while True:
         try:
             async with websockets.connect("ws://" + uri) as websocket:
-                # print("Connected to WebSocket")
-
-                # Join the specified room
-                await websocket.send(room)
+                
                 
                 while True:
+
                     try:
                         message = await websocket.recv()
                         data = json.loads(message)
