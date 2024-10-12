@@ -62,15 +62,18 @@ async def process_data(data):
 # WebSocket client to listen and process incoming messages
 async def listen_and_update():
 
-    # token_in = os.getenv("TOKEN_IN")
-    # token_out = os.getenv("TOKEN_OUT")
     uri = "ws://localhost:8765"  # WebSocket server URL
     # uri = "ws://" + os.getenv("ENDPOINT")  # WebSocket server URL
+    # room = os.getenv("ROOM") # Room name to join
+    room = "room1"
     
     while True:
         try:
             async with websockets.connect(uri) as websocket:
                 print("Connected to WebSocket")
+
+                # Join the specified room
+                await websocket.send(room)
                 
                 while True:
                     try:

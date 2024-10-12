@@ -13,7 +13,6 @@ def get_access(badge_id):
     
     global CONN
     
-
     if not os.path.exists(DB_FILE):
         return {"ok": False, "message": "Database not found."}
       

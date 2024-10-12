@@ -4,3 +4,4 @@
 gate.env
 **/venv
 **/.venv
+**/badges.db
